@@ -1,0 +1,14 @@
+$primary_color: #5a6174;
+$mock_screen_width: 360px;
+$mock_screen_height: 640px;
+$round_radius: 50px;
+$border_color: rgba(149, 160, 191, 0.2);
+$button_light_color: #fefefe;
+@mixin round_border_radius {
+  border-radius: $round_radius;
+}
+
+@font-face {
+  font-family: "YuGoth";
+  src: local("YuGothR"), url(../../fonts/YuGothR.ttc) format("truetype");
+}

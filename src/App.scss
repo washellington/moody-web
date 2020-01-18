@@ -1,0 +1,79 @@
+@import "assets/common/common";
+@import "assets/common/mobile";
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@media only screen and (max-width: 600px) {
+  html,
+  body,
+  .App,
+  #root {
+    height: 100%;
+  }
+
+  .App {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #signUpForm {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .App-logo {
+    width: (210px / $mock_screen_width) * 100vw;
+  }
+  #signUpForm {
+    display: flex;
+    justify-content: center;
+  }
+  input,
+  button {
+    @include mobile_std_input;
+
+    display: block;
+    margin-bottom: 25px;
+  }
+  button {
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: $button_light_color;
+    &[type="submit"] {
+      border: 0;
+      background-color: $primary_color;
+      color: $button_light_color;
+    }
+  }
+}
