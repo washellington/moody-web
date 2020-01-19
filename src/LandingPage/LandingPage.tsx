@@ -4,13 +4,15 @@ import { useFormik } from "formik";
 import logo from "../assets/title/moody_title.svg";
 import "./LandingPage.scss";
 import { stringify } from "querystring";
-import { Route } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 
 interface InitialValueProp {
   email: string;
   password: string;
 }
 const LandingPage: React.FC = () => {
+  const history = useHistory();
+
   const initialValue: InitialValueProp = {
     email: "",
     password: ""
@@ -26,7 +28,7 @@ const LandingPage: React.FC = () => {
     validationSchema: validationSchema,
     onSubmit: values => {
       console.log("formik onsubmit");
-      alert(JSON.stringify(values, null, 2));
+      history.push("/dashboard");
     }
   });
 

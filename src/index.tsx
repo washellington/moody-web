@@ -5,11 +5,15 @@ import App from "./LandingPage/LandingPage";
 import * as serviceWorker from "./serviceWorker";
 import "./fonts/YuGothR.ttc";
 import "typeface-roboto";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Overview from "./Overview/Overview";
 
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <Switch>
+      <Route exact path="/" component={App} />
+      <Route path="/dashboard" component={Overview} />
+    </Switch>
   </BrowserRouter>,
 
   document.getElementById("root")
