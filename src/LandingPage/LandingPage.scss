@@ -1,6 +1,6 @@
-@import "assets/common/common";
-@import "assets/common/mobile";
-@import "assets/common/web";
+@import "../assets/common/common";
+@import "../assets/common/mobile";
+@import "../assets/common/web";
 
 html,
 body,
@@ -54,5 +54,4 @@ button {
   button {
     @include mobile_std_input;
   }
-
 }
