@@ -4,12 +4,13 @@ import { useFormik } from "formik";
 import logo from "../assets/title/moody_title.svg";
 import "./LandingPage.scss";
 import { stringify } from "querystring";
+import { Route } from "react-router-dom";
 
 interface InitialValueProp {
   email: string;
   password: string;
 }
-const App: React.FC = () => {
+const LandingPage: React.FC = () => {
   const initialValue: InitialValueProp = {
     email: "",
     password: ""
@@ -24,21 +25,36 @@ const App: React.FC = () => {
     initialValues: initialValue,
     validationSchema: validationSchema,
     onSubmit: values => {
+      console.log("formik onsubmit");
       alert(JSON.stringify(values, null, 2));
     }
   });
 
   return (
-    <div className="App">
-      <img src={logo} className="App-logo" alt="logo" />
-      <form id="signUpForm">
-        <input name="email" type="text" placeholder="Email" />
-        <input name="password" type="text" placeholder="Password" />
-        <button type="submit">Login</button>
-        <button type="button">Create Account</button>
-      </form>
-    </div>
+    <Route path="/">
+      <div className="App">
+        <img src={logo} className="App-logo" alt="logo" />
+        <form id="signUpForm" onSubmit={formik.handleSubmit}>
+          <input
+            name="email"
+            type="text"
+            placeholder="Email"
+            onChange={formik.handleChange}
+            value={formik.values.email}
+          />
+          <input
+            name="password"
+            type="text"
+            placeholder="Password"
+            onChange={formik.handleChange}
+            value={formik.values.password}
+          />
+          <button type="submit">Login</button>
+          <button type="button">Create Account</button>
+        </form>
+      </div>
+    </Route>
   );
 };
 
-export default App;
+export default LandingPage;
