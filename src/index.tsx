@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./LandingPage/LandingPage";
 import * as serviceWorker from "./serviceWorker";
 import "./fonts/YuGothR.ttc";
+import "typeface-roboto";
 import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(

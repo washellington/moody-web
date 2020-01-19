@@ -12,3 +12,12 @@ $button_light_color: #fefefe;
   font-family: "YuGoth";
   src: local("YuGothR"), url(../../fonts/YuGothR.ttc) format("truetype");
 }
+
+.error {
+  color: #ed6f5f;
+}
+
+.inputField .error {
+  font-size: 10px;
+  margin-left: 10px;
+}

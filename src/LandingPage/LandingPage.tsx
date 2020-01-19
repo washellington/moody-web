@@ -35,20 +35,30 @@ const LandingPage: React.FC = () => {
       <div className="App">
         <img src={logo} className="App-logo" alt="logo" />
         <form id="signUpForm" onSubmit={formik.handleSubmit}>
-          <input
-            name="email"
-            type="text"
-            placeholder="Email"
-            onChange={formik.handleChange}
-            value={formik.values.email}
-          />
-          <input
-            name="password"
-            type="text"
-            placeholder="Password"
-            onChange={formik.handleChange}
-            value={formik.values.password}
-          />
+          <div className="inputField">
+            <input
+              name="email"
+              type="text"
+              placeholder="Email"
+              onChange={formik.handleChange}
+              value={formik.values.email}
+            />
+            {formik.errors.email && (
+              <span className="error">{formik.errors.email}</span>
+            )}
+          </div>
+          <div className="inputField">
+            <input
+              name="password"
+              type="text"
+              placeholder="Password"
+              onChange={formik.handleChange}
+              value={formik.values.password}
+            />
+            {formik.errors.password && (
+              <span className="error">{formik.errors.password}</span>
+            )}
+          </div>
           <button type="submit">Login</button>
           <button type="button">Create Account</button>
         </form>

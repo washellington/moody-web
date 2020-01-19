@@ -31,6 +31,10 @@ input,
 button {
   @include web_std_input;
   display: block;
+}
+
+.inputField,
+button {
   margin-bottom: 25px;
 }
 
