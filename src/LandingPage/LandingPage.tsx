@@ -3,7 +3,6 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import logo from "../assets/title/moody_title.svg";
 import "./LandingPage.scss";
-import { stringify } from "querystring";
 import { Route, useHistory } from "react-router-dom";
 
 interface InitialValueProp {

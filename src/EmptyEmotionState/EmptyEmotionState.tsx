@@ -3,7 +3,6 @@ import { Route } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import "./Overview.scss";
 import NavBar from "../NavBar/NavBar";
-import Emotion from "../Emotion/Emotion";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -11,16 +10,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Overview: React.FC = () => {
+const EmptyEmotionState: React.FC = () => {
   const classes = useStyles();
 
-  return (
-    <div>
-      <NavBar />
-      Overall Mood
-      <Emotion rating={0} />
-    </div>
-  );
+  return <></>;
 };
 
-export default Overview;
+export default EmptyEmotionState;

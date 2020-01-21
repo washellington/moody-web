@@ -1,0 +1,7 @@
+@import "../assets/common/common";
+@import "../assets/common/mobile";
+@import "../assets/common/web";
+
+.emotion {
+  height: (120px / $mock_screen_height) * 100vh;
+}
