@@ -11,14 +11,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Overview: React.FC = () => {
+interface Props {
+  recentEmotions: any[];
+}
+const Overview: React.FC<Props> = props => {
   const classes = useStyles();
+
+  const { recentEmotions } = props;
 
   return (
     <div>
       <NavBar />
-      Overall Mood
-      <Emotion rating={0} />
+      {(recentEmotions || []).length > 0 && (
+        <>
+          Overall Mood
+          <Emotion rating={0} />
+        </>
+      )}
     </div>
   );
 };
