@@ -43,7 +43,7 @@ const NavBar: React.FC = () => {
 
   return (
     <>
-      <AppBar position="static" className={classes.appBar}>
+      <AppBar position="sticky" className={classes.appBar}>
         <Toolbar>
           <Grid container>
             <Grid item xs={4}>

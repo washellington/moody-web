@@ -1,0 +1,7 @@
+@import "../assets/common/common";
+@import "../assets/common/mobile";
+@import "../assets/common/web";
+
+.empty_state_emotions {
+  width: (249px / $mock_screen_width) * 100vw;
+}
