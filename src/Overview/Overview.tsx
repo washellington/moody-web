@@ -32,20 +32,15 @@ const Overview: React.FC<Props> = props => {
   return (
     <>
       <NavBar />
-      {(recentEmotions || []).length > 0 && (
+      {[1].length > 0 && (
         <>
           Overall Mood
-          <Emotion rating={0} />
+          <Emotion rating={3} />
         </>
       )}
-      {(recentEmotions || []).length === 0 && (
+      {(recentEmotions || [1]).length === 0 && (
         <div className={classes.emptyStateContainer}>
           <EmptyEmotionState />
-          <p>
-            Oops! Looks like you do
-            <br /> not have any mood
-            <br /> entries
-          </p>
         </div>
       )}
     </>

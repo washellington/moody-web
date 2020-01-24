@@ -16,6 +16,12 @@ const EmptyEmotionState: React.FC = () => {
   return (
     <>
       <img src={emptyStateImage} className="empty_state_emotions" alt="logo" />
+      <p>
+        Oops! Looks like you do
+        <br /> not have any mood
+        <br /> entries
+      </p>
+      <button type="button">Log Mood</button>
     </>
   );
 };

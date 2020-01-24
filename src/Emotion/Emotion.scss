@@ -2,6 +2,40 @@
 @import "../assets/common/mobile";
 @import "../assets/common/web";
 
+$rating-5: #2dd68a;
+$rating-4: #28c1e0;
+$rating-3: #fecd34;
+$rating-2: #f5964d;
+$rating-1: #ed6f5f;
+
 .emotion {
   height: (120px / $mock_screen_height) * 100vh;
+  .emotion-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      height: 77px;
+    }
+  }
+}
+.rating-1 {
+  background-color: $rating-1;
+}
+.rating-2 {
+  background-color: $rating-2;
+}
+.rating-3 {
+  background-color: $rating-3;
+}
+.rating-4 {
+  background-color: $rating-4;
+}
+.rating-5 {
+  background-color: $rating-5;
 }
