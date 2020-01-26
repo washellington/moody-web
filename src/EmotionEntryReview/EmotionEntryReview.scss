@@ -1,0 +1,30 @@
+@import "../assets/common/common";
+@import "../assets/common/mobile";
+@import "../assets/common/web";
+
+$rating-5: #2dd68a33;
+$rating-4: #28c1e033;
+$rating-3: #fecd3433;
+$rating-2: #f5964d33;
+$rating-1: #ed6f5f33;
+
+.emotion-review {
+  height: 99px / $mock_screen_height * 100vh;
+  width: 311px / $mock_screen_width * 100vw;
+}
+
+.emotion-review-rating-1 {
+  background-color: $rating-1;
+}
+.emotion-review-rating-2 {
+  background-color: $rating-2;
+}
+.emotion-review-rating-3 {
+  background-color: $rating-3;
+}
+.emotion-review-rating-4 {
+  background-color: $rating-4;
+}
+.emotion-review-rating-5 {
+  background-color: $rating-5;
+}

@@ -5,6 +5,7 @@ import "./Overview.scss";
 import NavBar from "../NavBar/NavBar";
 import Emotion from "../Emotion/Emotion";
 import EmptyEmotionState from "../EmptyEmotionState/EmptyEmotionState";
+import EmotionEntryReview from "../EmotionEntryReview/EmotionEntryReview";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,11 +19,21 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
     marginTop: -50,
     textAlign: "center"
+  },
+  emotionEntryContainer: {
+    display: "flex",
+    justifyContent: "center"
   }
 }));
 
+export interface EmotionEntry {
+  rating: number;
+  notes: string;
+  date: Date;
+}
+
 interface Props {
-  recentEmotions: any[];
+  recentEmotions: EmotionEntry[];
 }
 const Overview: React.FC<Props> = props => {
   const classes = useStyles();
@@ -36,6 +47,22 @@ const Overview: React.FC<Props> = props => {
         <>
           Overall Mood
           <Emotion rating={3} />
+          Recent Entries
+          <div className={classes.emotionEntryContainer}>
+            {(
+              recentEmotions || [
+                {
+                  rating: 3,
+                  notes: "hello",
+                  date: new Date()
+                }
+              ]
+            ).map((x, i) => {
+              return (
+                <EmotionEntryReview key={`emotion-entry-${i}`} emotion={x} />
+              );
+            })}
+          </div>
         </>
       )}
       {(recentEmotions || [1]).length === 0 && (

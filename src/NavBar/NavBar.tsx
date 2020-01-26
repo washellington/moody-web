@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -6,7 +6,13 @@ import {
   Typography,
   Button,
   makeStyles,
-  Grid
+  Grid,
+  List,
+  ListItem,
+  ListItemIcon,
+  Divider,
+  Drawer,
+  ListItemText
 } from "@material-ui/core";
 import { Menu } from "@material-ui/icons";
 import icon from "../assets/icon/icon.svg";
@@ -35,11 +41,55 @@ const useStyles = makeStyles(theme => ({
   },
   appIcon: {
     width: 40
+  },
+  drawer: {
+    width: "50vw"
+  },
+  drawerLink: {
+    color: "#5A6174",
+    fontWeight: "bold"
   }
 }));
 
 const NavBar: React.FC = () => {
   const classes = useStyles();
+
+  const [open, setOpen] = useState(false);
+
+  const toggleDrawer = (open: boolean) => (
+    event: React.KeyboardEvent | React.MouseEvent
+  ) => {
+    if (
+      event.type === "keydown" &&
+      ((event as React.KeyboardEvent).key === "Tab" ||
+        (event as React.KeyboardEvent).key === "Shift")
+    ) {
+      return;
+    }
+    setOpen(open);
+  };
+
+  const sideList = () => (
+    <div
+      className={classes.drawer}
+      role="presentation"
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
+    >
+      <List>
+        {["Dashboard", "Journal", "Reports"].map(text => (
+          <ListItem button key={text}>
+            <ListItemText
+              classes={{
+                primary: classes.drawerLink
+              }}
+              primary={text}
+            />
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
 
   return (
     <>
@@ -51,6 +101,7 @@ const NavBar: React.FC = () => {
                 edge="start"
                 color="inherit"
                 aria-label="menu"
+                onClick={toggleDrawer(true)}
                 className={classes.menuContainer}
               >
                 <Menu className={classes.menu} />
@@ -63,6 +114,9 @@ const NavBar: React.FC = () => {
           </Grid>
         </Toolbar>
       </AppBar>
+      <Drawer open={open} onClose={toggleDrawer(false)}>
+        {sideList()}
+      </Drawer>
     </>
   );
 };
