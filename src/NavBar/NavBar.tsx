@@ -16,6 +16,7 @@ import {
 } from "@material-ui/core";
 import { Menu } from "@material-ui/icons";
 import icon from "../assets/icon/icon.svg";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,6 +54,7 @@ const useStyles = makeStyles(theme => ({
 
 const NavBar: React.FC = () => {
   const classes = useStyles();
+  const history = useHistory();
 
   const [open, setOpen] = useState(false);
 
@@ -82,6 +84,21 @@ const NavBar: React.FC = () => {
             <ListItemText
               classes={{
                 primary: classes.drawerLink
+              }}
+              onClick={() => {
+                switch (text) {
+                  case "Dashboard":
+                    history.push("/dashboard");
+                    break;
+                  case "Journal":
+                    history.push("/journal");
+                    break;
+                  // case "Reports":
+                  //   history.push("");
+                  //   break;
+                  default:
+                    break;
+                }
               }}
               primary={text}
             />
