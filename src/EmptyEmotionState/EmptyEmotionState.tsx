@@ -14,7 +14,7 @@ const EmptyEmotionState: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <>
+    <div id="EmptyStateEmotion">
       <img src={emptyStateImage} className="empty_state_emotions" alt="logo" />
       <p>
         Oops! Looks like you do
@@ -22,7 +22,7 @@ const EmptyEmotionState: React.FC = () => {
         <br /> entries
       </p>
       <button type="button">Log Mood</button>
-    </>
+    </div>
   );
 };
 
