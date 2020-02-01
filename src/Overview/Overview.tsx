@@ -22,6 +22,15 @@ const useStyles = makeStyles(theme => ({
   },
   emotionEntryContainer: {
     display: "flex",
+    justifyContent: "center",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  overviewContainer: {
+    // display: "flex"
+  },
+  buttonContainer: {
+    display: "flex",
     justifyContent: "center"
   }
 }));
@@ -44,7 +53,7 @@ const Overview: React.FC<Props> = props => {
     <>
       <NavBar />
       {[1].length > 0 && (
-        <>
+        <div className={classes.overviewContainer}>
           Overall Mood
           <Emotion rating={3} />
           Recent Entries
@@ -55,6 +64,11 @@ const Overview: React.FC<Props> = props => {
                   rating: 3,
                   notes: "hello",
                   date: new Date()
+                },
+                {
+                  rating: 5,
+                  notes: "hello",
+                  date: new Date()
                 }
               ]
             ).map((x, i) => {
@@ -63,7 +77,10 @@ const Overview: React.FC<Props> = props => {
               );
             })}
           </div>
-        </>
+          <div className={classes.buttonContainer}>
+            <button type="button">Log Mood</button>
+          </div>
+        </div>
       )}
       {(recentEmotions || [1]).length === 0 && (
         <div className={classes.emptyStateContainer}>

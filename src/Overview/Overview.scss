@@ -1,0 +1,11 @@
+@import "../assets/common/common";
+@import "../assets/common/mobile";
+@import "../assets/common/web";
+
+button {
+  @include web_std_input;
+  display: block;
+  background-color: $primary_color;
+  color: $button_light_color;
+  width: 313px / $mock_screen_width * 100vw;
+}
