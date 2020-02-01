@@ -33,7 +33,7 @@ const LandingPage: React.FC = () => {
 
   return (
     <Route path="/">
-      <div className="App">
+      <div className="App" id="LandingPage">
         <img src={logo} className="App-logo" alt="logo" />
         <form id="signUpForm" onSubmit={formik.handleSubmit}>
           <div className="inputField">

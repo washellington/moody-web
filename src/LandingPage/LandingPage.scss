@@ -16,46 +16,51 @@ body,
   align-items: center;
 }
 
-.App-logo {
-  width: (210px / $mock_web_width) * 100vw;
-  margin-bottom: 25px;
-}
-
-#signUpForm {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-
-input,
-button {
-  @include web_std_input;
-  display: block;
-}
-
-.inputField,
-button {
-  margin-bottom: 25px;
-}
-
-button {
-  font-size: 11px;
-  text-transform: uppercase;
-  font-weight: bold;
-  background-color: $button_light_color;
-  &[type="submit"] {
-    border: 0;
-    background-color: $primary_color;
-    color: $button_light_color;
-  }
-}
-@media only screen and (max-width: 600px) {
+#LandingPage {
   .App-logo {
-    width: (210px / $mock_screen_width) * 100vw;
+    width: (210px / $mock_web_width) * 100vw;
+    margin-bottom: 25px;
+  }
+
+  #signUpForm {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
   }
 
   input,
   button {
-    @include mobile_std_input;
+    @include web_std_input;
+    display: block;
+  }
+
+  .inputField,
+  button {
+    margin-bottom: 25px;
+  }
+
+  button {
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: $button_light_color;
+    &[type="button"] {
+      color: $button_light_text_color;
+    }
+    &[type="submit"] {
+      border: 0;
+      background-color: $primary_color;
+      color: $button_light_color;
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    .App-logo {
+      width: (210px / $mock_screen_width) * 100vw;
+    }
+
+    input,
+    button {
+      @include mobile_std_input;
+    }
   }
 }

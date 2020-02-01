@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import "./Overview.scss";
 import NavBar from "../NavBar/NavBar";
@@ -48,9 +48,10 @@ const Overview: React.FC<Props> = props => {
   const classes = useStyles();
 
   const { recentEmotions } = props;
+  const history = useHistory();
 
   return (
-    <>
+    <div id="Overview">
       <NavBar />
       {[1].length > 0 && (
         <div className={classes.overviewContainer}>
@@ -78,7 +79,15 @@ const Overview: React.FC<Props> = props => {
             })}
           </div>
           <div className={classes.buttonContainer}>
-            <button type="button">Log Mood</button>
+            <button
+              className="log-mood-bttn"
+              type="button"
+              onClick={() => {
+                history.push("/log_mood");
+              }}
+            >
+              Log Mood
+            </button>
           </div>
         </div>
       )}
@@ -87,7 +96,7 @@ const Overview: React.FC<Props> = props => {
           <EmptyEmotionState />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

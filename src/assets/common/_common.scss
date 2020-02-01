@@ -4,6 +4,7 @@ $mock_screen_height: 640px;
 $round_radius: 50px;
 $border_color: rgba(149, 160, 191, 0.2);
 $button_light_color: #fefefe;
+$button_light_text_color: #808080;
 @mixin round_border_radius {
   border-radius: $round_radius;
 }
