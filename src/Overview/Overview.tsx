@@ -6,6 +6,7 @@ import NavBar from "../NavBar/NavBar";
 import Emotion from "../Emotion/Emotion";
 import EmptyEmotionState from "../EmptyEmotionState/EmptyEmotionState";
 import EmotionEntryReview from "../EmotionEntryReview/EmotionEntryReview";
+import { useMediaQuery } from "react-responsive";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -49,66 +50,71 @@ interface Props {
 }
 const Overview: React.FC<Props> = props => {
   const classes = useStyles();
+  const isMobile = useMediaQuery({ query: "(max-width: 600px)" });
 
   const { recentEmotions } = props;
   const history = useHistory();
 
   return (
     <>
-      <NavBar />
-      <div id="Overview">
-        {[1].length > 0 && (
-          <div className={classes.overviewContainer}>
-            <div className="flex-center-container">
-              <h1>Overall Mood</h1>
-            </div>
-            <Emotion rating={3} />
-            <div className="flex-center-container">
-              <div className={classes.emotionEntryContainer + " container"}>
-                <h1>Recent Entries</h1>
+      {isMobile && (
+        <>
+          <NavBar />
+          <div id="Overview">
+            {[1].length > 0 && (
+              <div className={classes.overviewContainer}>
+                <div className="flex-center-container">
+                  <h1>Overall Mood</h1>
+                </div>
+                <Emotion rating={3} />
+                <div className="flex-center-container">
+                  <div className={classes.emotionEntryContainer + " container"}>
+                    <h1>Recent Entries</h1>
 
-                {(
-                  recentEmotions || [
-                    {
-                      rating: 3,
-                      notes: "hello",
-                      date: new Date()
-                    },
-                    {
-                      rating: 5,
-                      notes: "hello",
-                      date: new Date()
-                    }
-                  ]
-                ).map((x, i) => {
-                  return (
-                    <EmotionEntryReview
-                      key={`emotion-entry-${i}`}
-                      emotion={x}
-                    />
-                  );
-                })}
+                    {(
+                      recentEmotions || [
+                        {
+                          rating: 3,
+                          notes: "hello",
+                          date: new Date()
+                        },
+                        {
+                          rating: 5,
+                          notes: "hello",
+                          date: new Date()
+                        }
+                      ]
+                    ).map((x, i) => {
+                      return (
+                        <EmotionEntryReview
+                          key={`emotion-entry-${i}`}
+                          emotion={x}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className={classes.buttonContainer}>
+                  <button
+                    className="log-mood-bttn"
+                    type="button"
+                    onClick={() => {
+                      history.push("/log_mood");
+                    }}
+                  >
+                    Log Mood
+                  </button>
+                </div>
               </div>
-            </div>
-            <div className={classes.buttonContainer}>
-              <button
-                className="log-mood-bttn"
-                type="button"
-                onClick={() => {
-                  history.push("/log_mood");
-                }}
-              >
-                Log Mood
-              </button>
-            </div>
+            )}
+            {(recentEmotions || [1]).length === 0 && (
+              <div className={classes.emptyStateContainer}>
+                <EmptyEmotionState />
+              </div>
+            )}
           </div>
-        )}
-        {(recentEmotions || [1]).length === 0 && (
-          <div className={classes.emptyStateContainer}>
-            <EmptyEmotionState />
-          </div>
-        )}
-      </div>
+        </>
+      )}
     </>
   );
 };
