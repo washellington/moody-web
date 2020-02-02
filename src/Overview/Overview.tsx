@@ -57,6 +57,11 @@ const Overview: React.FC<Props> = props => {
 
   return (
     <>
+      {!isMobile && (
+        <>
+          <NavBar />
+        </>
+      )}
       {isMobile && (
         <>
           <NavBar />

@@ -17,6 +17,13 @@ import {
 import { Menu } from "@material-ui/icons";
 import icon from "../assets/icon/icon.svg";
 import { useHistory } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
+import HomeIcon from "@material-ui/icons/Home";
+import DateRangeIcon from "@material-ui/icons/DateRange";
+import SettingsIcon from "@material-ui/icons/Settings";
+import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
+
+const WEB_DRAWER_WIDTH = "7vw";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -46,17 +53,37 @@ const useStyles = makeStyles(theme => ({
   drawer: {
     width: "50vw"
   },
+  webDrawer: {
+    width: WEB_DRAWER_WIDTH,
+    height: "100vh",
+    display: "flex",
+    justifyContent: "space-between",
+    flexDirection: "row"
+  },
+  webAppMargin: {
+    marginLeft: WEB_DRAWER_WIDTH
+  },
   drawerLink: {
     color: "#5A6174",
     fontWeight: "bold"
+  },
+  centerContent: {
+    justifyContent: "center"
+  },
+  webDrawerList: {
+    display: "flex",
+    justifyContent: "space-around",
+    flexDirection: "column",
+    padding: "15vh 0"
   }
 }));
 
 const NavBar: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
+  const isMobile = useMediaQuery({ query: "(max-width: 600px)" });
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(!isMobile);
 
   const toggleDrawer = (open: boolean) => (
     event: React.KeyboardEvent | React.MouseEvent
@@ -71,20 +98,45 @@ const NavBar: React.FC = () => {
     setOpen(open);
   };
 
+  const MENU_LIST = isMobile
+    ? ["Dashboard", "Journal", "Reports"]
+    : ["Dashboard", "Journal", "Settings", "Logout"];
+
   const sideList = () => (
     <div
-      className={classes.drawer}
+      className={!isMobile ? classes.webDrawer : classes.drawer}
       role="presentation"
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-      <List>
-        {["Dashboard", "Journal", "Reports"].map(text => (
-          <ListItem button key={text}>
-            <ListItemText
-              classes={{
-                primary: classes.drawerLink
-              }}
+      <List className={isMobile ? "" : classes.webDrawerList}>
+        {MENU_LIST.map(text =>
+          isMobile ? (
+            <ListItem button key={text}>
+              <ListItemText
+                classes={{
+                  primary: classes.drawerLink
+                }}
+                onClick={() => {
+                  switch (text) {
+                    case "Dashboard":
+                      history.push("/dashboard");
+                      break;
+                    case "Journal":
+                      history.push("/journal");
+                      break;
+                    // case "Reports":
+                    //   history.push("");
+                    //   break;
+                    default:
+                      break;
+                  }
+                }}
+                primary={text}
+              />
+            </ListItem>
+          ) : (
+            <ListItem
               onClick={() => {
                 switch (text) {
                   case "Dashboard":
@@ -100,10 +152,32 @@ const NavBar: React.FC = () => {
                     break;
                 }
               }}
-              primary={text}
-            />
-          </ListItem>
-        ))}
+              button
+              key={text}
+            >
+              {text == "Dashboard" && (
+                <ListItemIcon>
+                  <HomeIcon />
+                </ListItemIcon>
+              )}
+              {text == "Journal" && (
+                <ListItemIcon>
+                  <DateRangeIcon />
+                </ListItemIcon>
+              )}
+              {text == "Settings" && (
+                <ListItemIcon>
+                  <SettingsIcon />
+                </ListItemIcon>
+              )}
+              {text == "Logout" && (
+                <ListItemIcon>
+                  <PowerSettingsNewIcon />
+                </ListItemIcon>
+              )}
+            </ListItem>
+          )
+        )}
       </List>
     </div>
   );
@@ -112,26 +186,31 @@ const NavBar: React.FC = () => {
     <>
       <AppBar position="sticky" className={classes.appBar}>
         <Toolbar>
-          <Grid container>
-            <Grid item xs={4}>
-              <IconButton
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                onClick={toggleDrawer(true)}
-                className={classes.menuContainer}
-              >
-                <Menu className={classes.menu} />
-              </IconButton>
-            </Grid>
+          <Grid container className={!isMobile ? classes.centerContent : ""}>
+            {isMobile && (
+              <Grid item xs={4}>
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  aria-label="menu"
+                  onClick={toggleDrawer(true)}
+                  className={classes.menuContainer}
+                >
+                  <Menu className={classes.menu} />
+                </IconButton>
+              </Grid>
+            )}
             <Grid item xs={4} className={classes.centerGrid}>
               <img src={icon} className={classes.appIcon} alt="logo" />
             </Grid>
-            <Grid item xs={4}></Grid>
           </Grid>
         </Toolbar>
       </AppBar>
-      <Drawer open={open} onClose={toggleDrawer(false)}>
+      <Drawer
+        variant={!isMobile ? "permanent" : "temporary"}
+        open={open}
+        onClose={toggleDrawer(false)}
+      >
         {sideList()}
       </Drawer>
     </>
