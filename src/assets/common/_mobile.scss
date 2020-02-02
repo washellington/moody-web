@@ -9,3 +9,10 @@
   width: (313px / $mock_screen_width) * 100vw;
   height: (53px / $mock_screen_height) * 100vh;
 }
+
+@mixin header_1 {
+  font-family: "Roboto-Regular";
+  font-size: 20px;
+  color: $primary_color;
+  font-weight: normal;
+}

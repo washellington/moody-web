@@ -3,7 +3,6 @@ import { makeStyles, Slider } from "@material-ui/core";
 import Emotion from "../Emotion/Emotion";
 import EmptyEmotionState from "../EmptyEmotionState/EmptyEmotionState";
 import EmotionEntryReview from "../EmotionEntryReview/EmotionEntryReview";
-import moment from "moment";
 
 const useStyles = makeStyles(theme => ({}));
 

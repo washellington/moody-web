@@ -1,3 +1,5 @@
+@import "../assets/common/mobile";
+
 $primary_color: #5a6174;
 $mock_screen_width: 360px;
 $mock_screen_height: 640px;
@@ -14,6 +16,12 @@ $button_light_text_color: #808080;
   src: local("YuGothR"), url(../../fonts/YuGothR.ttc) format("truetype");
 }
 
+@font-face {
+  font-family: "Roboto-Regular";
+  src: local("Roboto-Regular"),
+    url(../../fonts/Roboto-Regular.ttf) format("truetype");
+}
+
 .error {
   color: #ed6f5f;
 }
@@ -21,4 +29,10 @@ $button_light_text_color: #808080;
 .inputField .error {
   font-size: 10px;
   margin-left: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+  h1 {
+    @include header_1;
+  }
 }

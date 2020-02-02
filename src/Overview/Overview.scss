@@ -10,4 +10,14 @@
     color: $button_light_color;
     width: 313px / $mock_screen_width * 100vw;
   }
+
+  .container,
+  h1:first-child {
+    width: 313px / $mock_screen_width * 100vw;
+  }
+
+  .flex-center-container {
+    display: flex;
+    justify-content: center;
+  }
 }
