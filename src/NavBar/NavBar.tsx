@@ -23,7 +23,7 @@ import DateRangeIcon from "@material-ui/icons/DateRange";
 import SettingsIcon from "@material-ui/icons/Settings";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 
-const WEB_DRAWER_WIDTH = "7vw";
+export const WEB_DRAWER_WIDTH = "7vw";
 
 const useStyles = makeStyles(theme => ({
   root: {

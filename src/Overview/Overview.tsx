@@ -7,6 +7,7 @@ import Emotion from "../Emotion/Emotion";
 import EmptyEmotionState from "../EmptyEmotionState/EmptyEmotionState";
 import EmotionEntryReview from "../EmotionEntryReview/EmotionEntryReview";
 import { useMediaQuery } from "react-responsive";
+import WebOverview from "../WebOverview/WebOverview";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -60,6 +61,7 @@ const Overview: React.FC<Props> = props => {
       {!isMobile && (
         <>
           <NavBar />
+          <WebOverview />
         </>
       )}
       {isMobile && (
