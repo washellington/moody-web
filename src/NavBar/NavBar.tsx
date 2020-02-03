@@ -23,6 +23,8 @@ import DateRangeIcon from "@material-ui/icons/DateRange";
 import SettingsIcon from "@material-ui/icons/Settings";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 
+import "./NavBar.scss";
+
 export const WEB_DRAWER_WIDTH = "7vw";
 
 const useStyles = makeStyles(theme => ({
@@ -157,22 +159,22 @@ const NavBar: React.FC = () => {
             >
               {text == "Dashboard" && (
                 <ListItemIcon>
-                  <HomeIcon />
+                  <HomeIcon className="web-nav-icon home-icon" />
                 </ListItemIcon>
               )}
               {text == "Journal" && (
                 <ListItemIcon>
-                  <DateRangeIcon />
+                  <DateRangeIcon className="web-nav-icon calendar-icon" />
                 </ListItemIcon>
               )}
               {text == "Settings" && (
                 <ListItemIcon>
-                  <SettingsIcon />
+                  <SettingsIcon className="web-nav-icon settings-icon" />
                 </ListItemIcon>
               )}
               {text == "Logout" && (
                 <ListItemIcon>
-                  <PowerSettingsNewIcon />
+                  <PowerSettingsNewIcon className="web-nav-icon power-icon" />
                 </ListItemIcon>
               )}
             </ListItem>

@@ -21,6 +21,9 @@ $rating-1: #ed6f5f;
       margin-right: auto;
       display: block;
       height: 77px;
+      @media only screen and (min-width: 600px) {
+        height: 50px;
+      }
     }
   }
 }

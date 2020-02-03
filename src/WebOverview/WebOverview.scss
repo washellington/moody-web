@@ -1,0 +1,13 @@
+@import "../assets/common/common";
+@import "../assets/common/mobile";
+@import "../assets/common/web";
+
+#WebOverview {
+  .recent-list-container {
+    width: (874px / $mock_web_width) * 100vw;
+    max-width: 874px;
+    max-height: 197px;
+    height: (197px / $mock_web_height) * 100vh;
+    border-radius: 4px;
+  }
+}
