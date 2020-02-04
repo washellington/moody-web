@@ -47,9 +47,9 @@ const WebOverview: React.FC = () => {
             </div>
           </div>
         </div>
-        <div>
+        {/* <div>
           <h2>Reports</h2>
-        </div>
+        </div> */}
       </div>
     </div>
   );

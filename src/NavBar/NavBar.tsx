@@ -159,17 +159,29 @@ const NavBar: React.FC = () => {
             >
               {text == "Dashboard" && (
                 <ListItemIcon>
-                  <HomeIcon className="web-nav-icon home-icon" />
+                  <HomeIcon
+                    className={`${
+                      history.location.pathname == "/dashboard" ? "active" : ""
+                    } web-nav-icon`}
+                  />
                 </ListItemIcon>
               )}
               {text == "Journal" && (
                 <ListItemIcon>
-                  <DateRangeIcon className="web-nav-icon calendar-icon" />
+                  <DateRangeIcon
+                    className={`${
+                      history.location.pathname == "/journal" ? "active" : ""
+                    } web-nav-icon`}
+                  />
                 </ListItemIcon>
               )}
               {text == "Settings" && (
                 <ListItemIcon>
-                  <SettingsIcon className="web-nav-icon settings-icon" />
+                  <SettingsIcon
+                    className={`${
+                      history.location.pathname == "/settings" ? "active" : ""
+                    } web-nav-icon`}
+                  />
                 </ListItemIcon>
               )}
               {text == "Logout" && (

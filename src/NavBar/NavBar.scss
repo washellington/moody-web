@@ -3,3 +3,7 @@
 .web-nav-icon {
   color: $primary_color;
 }
+
+.web-nav-icon.active {
+  color: $accent_color;
+}
