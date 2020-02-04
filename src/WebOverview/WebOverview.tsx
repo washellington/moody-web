@@ -1,7 +1,9 @@
 import React from "react";
-import { makeStyles, List } from "@material-ui/core";
+import { makeStyles, List, Fab } from "@material-ui/core";
 import { WEB_DRAWER_WIDTH } from "../NavBar/NavBar";
 import Emotion from "../Emotion/Emotion";
+import EditIcon from "@material-ui/icons/Edit";
+
 import "./WebOverview.scss";
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,6 +22,15 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-end"
+  },
+  fabContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    paddingRight: 25,
+    "& button, & button.MuiFab-root:hover": {
+      backgroundColor: "#5a6174",
+      color: "white"
+    }
   }
 }));
 
@@ -50,6 +61,11 @@ const WebOverview: React.FC = () => {
         {/* <div>
           <h2>Reports</h2>
         </div> */}
+      </div>
+      <div className={classes.fabContainer}>
+        <Fab color="inherit" aria-label="log mood">
+          <EditIcon className="fab-button" />
+        </Fab>
       </div>
     </div>
   );
