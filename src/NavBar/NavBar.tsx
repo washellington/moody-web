@@ -25,7 +25,7 @@ import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 
 import "./NavBar.scss";
 
-export const WEB_DRAWER_WIDTH = "7vw";
+export const WEB_DRAWER_WIDTH = 50;
 
 const useStyles = makeStyles(theme => ({
   root: {

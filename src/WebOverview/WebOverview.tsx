@@ -5,6 +5,7 @@ import Emotion from "../Emotion/Emotion";
 import EditIcon from "@material-ui/icons/Edit";
 
 import "./WebOverview.scss";
+import EmotionEntryReview from "../EmotionEntryReview/EmotionEntryReview";
 const useStyles = makeStyles(theme => ({
   root: {
     marginLeft: WEB_DRAWER_WIDTH
@@ -16,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center"
   },
   recentEntryListContainer: {
-    backgroundColor: "#E5E5E5"
+    //backgroundColor: "#E5E5E5"
   },
   floatLinkRight: {
     display: "flex",
@@ -24,13 +25,21 @@ const useStyles = makeStyles(theme => ({
     alignItems: "flex-end"
   },
   fabContainer: {
+    right: 25,
+    bottom: 25,
+    position: "fixed",
     display: "flex",
     justifyContent: "flex-end",
-    paddingRight: 25,
+    //paddingRight: 25,
     "& button, & button.MuiFab-root:hover": {
       backgroundColor: "#5a6174",
       color: "white"
     }
+  },
+  overallMoodContainer: {
+    display: "flex",
+    width: "100%",
+    justifyContent: "center"
   }
 }));
 
@@ -41,20 +50,33 @@ const WebOverview: React.FC = () => {
     <div id="WebOverview" className={classes.root}>
       <h1>Overview</h1>
       <div className={classes.overviewContainer}>
-        <div>
-          <h2>Overall Mood</h2>
-          <Emotion rating={2} />
+        <div className={classes.overallMoodContainer}>
+          <div>
+            <h2>Overall Mood</h2>
+            <Emotion rating={2} />
+          </div>
         </div>
         <div>
           <h2>Recent Entries</h2>
           <div className={classes.floatLinkRight}>
-            <a>View Journal</a>
-            <div
-              className={
-                classes.recentEntryListContainer + " recent-list-container"
-              }
-            >
-              <List></List>
+            <a className="accent-link">View Journal</a>
+            <div className={classes.recentEntryListContainer + " "}>
+              {[
+                {
+                  rating: 3,
+                  notes: "hello",
+                  date: new Date()
+                },
+                {
+                  rating: 5,
+                  notes: "hello",
+                  date: new Date()
+                }
+              ].map((x, i) => {
+                return (
+                  <EmotionEntryReview key={`emotion-entry-${i}`} emotion={x} />
+                );
+              })}
             </div>
           </div>
         </div>

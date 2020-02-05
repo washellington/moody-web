@@ -10,4 +10,11 @@
     height: (197px / $mock_web_height) * 100vh;
     border-radius: 4px;
   }
+
+  .accent-link {
+    color: $accent_color;
+    font-family: "YuGoth";
+    font-weight: bold;
+    font-size: 14;
+  }
 }

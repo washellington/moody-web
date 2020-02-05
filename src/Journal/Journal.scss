@@ -1,0 +1,19 @@
+@import "../assets/common/common";
+@import "../assets/common/mobile";
+@import "../assets/common/web";
+
+#Journal {
+  .react-calendar {
+    width: 985px / $mock-web_width * 100vw;
+    max-width: 985px;
+    font-size: 30px;
+    //max-height: 650px;
+    //height: 650px / $mock_web_height * 100vh;
+    .react-calendar__month-view__days button {
+      font-size: 23px;
+    }
+    .react-calendar__navigation button {
+      font-size: 26px;
+    }
+  }
+}
