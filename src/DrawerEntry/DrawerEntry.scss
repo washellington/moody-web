@@ -1,0 +1,19 @@
+@import "../assets/common/common";
+@import "../assets/common/mobile";
+@import "../assets/common/web";
+
+#DrawerEntry {
+  button {
+    border-radius: 25px;
+    display: block;
+  }
+
+  .remove-button {
+    background-color: $error_color;
+    color: white;
+  }
+  .edit-button {
+    background-color: $button_light_color;
+    color: $button_light_text_color;
+  }
+}

@@ -11,8 +11,8 @@ import EmotionSlider, {
 } from "../EmotionSlider/EmotionSlider";
 import * as Yup from "yup";
 
+import "./LogMoodForm.scss";
 import { useFormik } from "formik";
-import LogMoodForm from "../LogMoodForm/LogMoodForm";
 
 const useStyles = makeStyles(theme => ({}));
 
@@ -26,7 +26,7 @@ interface InitialValueProp {
   notes: string;
 }
 
-const LogMood: React.FC<Props> = props => {
+const LogMoodForm: React.FC<Props> = props => {
   const classes = useStyles();
 
   const { entryDate } = props;
@@ -55,12 +55,30 @@ const LogMood: React.FC<Props> = props => {
 
   return (
     <>
-      <NavBar />
-      <div id="LogMood">
-        <LogMoodForm entryDate={new Date()} />
-      </div>
+      <form id="addEmotionForm" onSubmit={formik.handleSubmit}>
+        <p>Add</p>
+        <p>
+          <span>{moment(entryDate).format("MM/DD/YYYY")}</span>
+          Entry
+        </p>
+        <EmotionSlider
+          onChange={rating => {
+            formik.setFieldValue("emotionRating", rating);
+            formik.handleChange("emotionRating");
+          }}
+        />
+        <TextareaAutosize
+          name="notes"
+          value={formik.values.notes}
+          onChange={formik.handleChange}
+          rowsMin={5}
+          placeholder="Elaborate your mood..."
+        />
+        <button type="submit">Add</button>
+        <button type="button">Cancel</button>
+      </form>
     </>
   );
 };
 
-export default LogMood;
+export default LogMoodForm;
