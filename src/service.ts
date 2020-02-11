@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const LOGIN_URL = "localhost:1234/auth/login";
+const LOGIN_URL = "authorization/auth";
 
 export const api = axios.create({
-  baseURL: "_URL_",
+  baseURL: "http://localhost:1234",
   timeout: 1000,
   withCredentials: false,
   responseType: "json",
