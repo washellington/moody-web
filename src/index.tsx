@@ -9,16 +9,27 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Overview from "./Overview/Overview";
 import LogMood from "./LogMood/LogMood";
 import Journal from "./Journal/Journal";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import thunkMiddleware from "redux-thunk";
+import rootReducer from "./reducer";
+import loggerMiddleware from "./middleware/logger";
+
+const middlewareEnhancer = applyMiddleware(loggerMiddleware, thunkMiddleware);
+
+const store = createStore(rootReducer, undefined, middlewareEnhancer);
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Switch>
-      <Route exact path="/" component={App} />
-      <Route path="/dashboard" component={Overview} />
-      <Route path="/log_mood" component={LogMood} />
-      <Route path="/journal" component={Journal} />
-    </Switch>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={App} />
+        <Route path="/dashboard" component={Overview} />
+        <Route path="/log_mood" component={LogMood} />
+        <Route path="/journal" component={Journal} />
+      </Switch>
+    </BrowserRouter>
+  </Provider>,
 
   document.getElementById("root")
 );

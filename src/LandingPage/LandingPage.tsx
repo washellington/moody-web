@@ -4,6 +4,10 @@ import { useFormik } from "formik";
 import logo from "../assets/title/moody_title.svg";
 import "./LandingPage.scss";
 import { Route, useHistory } from "react-router-dom";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { AppActions } from "../actions";
+import { loginUser } from "../service";
 
 interface InitialValueProp {
   email: string;
@@ -11,6 +15,8 @@ interface InitialValueProp {
 }
 const LandingPage: React.FC = () => {
   const history = useHistory();
+
+  const dispatch = useDispatch();
 
   const initialValue: InitialValueProp = {
     email: "",
@@ -27,7 +33,14 @@ const LandingPage: React.FC = () => {
     validationSchema: validationSchema,
     onSubmit: values => {
       console.log("formik onsubmit");
-      history.push("/dashboard");
+
+      dispatch(AppActions.showLoading());
+      dispatch(
+        loginUser(values.email, values.password).then(data => {
+          console.log(data);
+          history.push("/dashboard");
+        })
+      );
     }
   });
 
