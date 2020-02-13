@@ -26,6 +26,18 @@ const showLoading = () => {
   };
 };
 
+interface Authentication {
+  user_id: number;
+}
+
+const loginUser = (authentication: Authentication) => {
+  return {
+    type: LOGIN_USER,
+    jwt: authentication
+  };
+};
+
 export const AppActions = {
-  showLoading
+  showLoading,
+  loginUser
 };

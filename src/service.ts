@@ -4,7 +4,7 @@ const LOGIN_URL = "authorization/auth";
 
 export const api = axios.create({
   baseURL: "http://localhost:1234",
-  timeout: 1000,
+  timeout: 5000,
   withCredentials: false,
   responseType: "json",
   headers: {
@@ -13,6 +13,12 @@ export const api = axios.create({
     "Access-Control-Allow-Origin": "*" // whatever you want
   }
 });
+
+export interface LoginResponse {
+  user: {
+    user_id: number;
+  };
+}
 
 export const loginUser = (email: string, password: string) => {
   return api.post(LOGIN_URL, {

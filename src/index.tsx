@@ -14,13 +14,15 @@ import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import rootReducer from "./reducer";
 import loggerMiddleware from "./middleware/logger";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const middlewareEnhancer = applyMiddleware(loggerMiddleware, thunkMiddleware);
 
 const store = createStore(rootReducer, undefined, middlewareEnhancer);
-
 ReactDOM.render(
   <Provider store={store}>
+    <ToastContainer autoClose={false} />
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={App} />

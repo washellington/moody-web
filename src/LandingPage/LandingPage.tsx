@@ -4,10 +4,12 @@ import { useFormik } from "formik";
 import logo from "../assets/title/moody_title.svg";
 import "./LandingPage.scss";
 import { Route, useHistory } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useDispatch } from "react-redux";
 import { AppActions } from "../actions";
-import { loginUser } from "../service";
+import { loginUser, LoginResponse } from "../service";
+import { toast } from "react-toastify";
+import { ALERT_MSG } from "../alerts";
 
 interface InitialValueProp {
   email: string;
@@ -36,10 +38,20 @@ const LandingPage: React.FC = () => {
 
       dispatch(AppActions.showLoading());
       dispatch(
-        loginUser(values.email, values.password).then(data => {
-          console.log(data);
-          history.push("/dashboard");
-        })
+        loginUser(values.email, values.password)
+          .then((resp: AxiosResponse<LoginResponse>) => {
+            const { data } = resp;
+            console.log(data);
+            if (data && data.user) {
+              dispatch(AppActions.loginUser({ user_id: data.user.user_id }));
+              history.push("/dashboard");
+            } else {
+              toast.error(ALERT_MSG.INVALID_LOGIN);
+            }
+          })
+          .catch(err => {
+            toast.error(ALERT_MSG.errorMessage(err));
+          })
       );
     }
   });
