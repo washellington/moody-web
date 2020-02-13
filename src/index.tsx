@@ -16,6 +16,7 @@ import rootReducer from "./reducer";
 import loggerMiddleware from "./middleware/logger";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CreateAccount from "./CreateAccount/CreateAccount";
 
 const middlewareEnhancer = applyMiddleware(loggerMiddleware, thunkMiddleware);
 
@@ -29,6 +30,7 @@ ReactDOM.render(
         <Route path="/dashboard" component={Overview} />
         <Route path="/log_mood" component={LogMood} />
         <Route path="/journal" component={Journal} />
+        <Route path="/create_account" component={CreateAccount} />
       </Switch>
     </BrowserRouter>
   </Provider>,

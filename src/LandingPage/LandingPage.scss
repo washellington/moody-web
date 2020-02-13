@@ -60,6 +60,14 @@ body,
       width: (210px / $mock_screen_width) * 100vw;
     }
 
+    .inputField label {
+      font-family: "YuGoth";
+      font-weight: bold;
+      font-size: 16px;
+      color: $primary_color;
+      margin-left: 5px;
+    }
+
     input,
     button {
       @include mobile_std_input;

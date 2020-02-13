@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const LOGIN_URL = "authorization/auth";
-
+const CREATE_URL = "/users";
 export const api = axios.create({
   baseURL: "http://localhost:1234",
   timeout: 5000,
@@ -22,6 +22,13 @@ export interface LoginResponse {
 
 export const loginUser = (email: string, password: string) => {
   return api.post(LOGIN_URL, {
+    email,
+    password
+  });
+};
+
+export const createUser = (email: string, password: string) => {
+  return api.put(CREATE_URL, {
     email,
     password
   });
