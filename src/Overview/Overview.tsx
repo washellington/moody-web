@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import "./Overview.scss";
@@ -8,6 +8,11 @@ import EmptyEmotionState from "../EmptyEmotionState/EmptyEmotionState";
 import EmotionEntryReview from "../EmotionEntryReview/EmotionEntryReview";
 import { useMediaQuery } from "react-responsive";
 import WebOverview from "../WebOverview/WebOverview";
+import { getRecentMoods } from "../service";
+import { AppActions } from "../actions";
+import { useDispatch, useSelector } from "react-redux";
+import { AppState } from "../reducer";
+import { MentalState } from "../types";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,14 +45,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export interface EmotionEntry {
-  rating: number;
-  notes: string;
-  date: Date;
-}
-
 interface Props {
-  recentEmotions: EmotionEntry[];
+  recentEmotions: MentalState[];
 }
 const Overview: React.FC<Props> = props => {
   const classes = useStyles();
@@ -55,20 +54,32 @@ const Overview: React.FC<Props> = props => {
 
   const { recentEmotions } = props;
   const history = useHistory();
+  const dispatch = useDispatch();
+  const recentEntries = useSelector<AppState, MentalState[]>(
+    state => state.recentEntries
+  );
+
+  useEffect(() => {
+    getRecentMoods().then(data => {
+      const recentEmotions = data.data;
+      console.log(recentEmotions);
+      dispatch(AppActions.getRecentEntries(recentEmotions));
+    });
+  }, []);
 
   return (
     <>
       {!isMobile && (
         <>
           <NavBar />
-          <WebOverview />
+          <WebOverview recentEntries={recentEntries} />
         </>
       )}
       {isMobile && (
         <>
           <NavBar />
           <div id="Overview">
-            {[1].length > 0 && (
+            {recentEntries.length > 0 && (
               <div className={classes.overviewContainer}>
                 <div className="flex-center-container">
                   <h1>Overall Mood</h1>
@@ -78,20 +89,7 @@ const Overview: React.FC<Props> = props => {
                   <div className={classes.emotionEntryContainer + " container"}>
                     <h1>Recent Entries</h1>
 
-                    {(
-                      recentEmotions || [
-                        {
-                          rating: 3,
-                          notes: "hello",
-                          date: new Date()
-                        },
-                        {
-                          rating: 5,
-                          notes: "hello",
-                          date: new Date()
-                        }
-                      ]
-                    ).map((x, i) => {
+                    {recentEntries.map((x, i) => {
                       return (
                         <EmotionEntryReview
                           key={`emotion-entry-${i}`}
@@ -114,7 +112,7 @@ const Overview: React.FC<Props> = props => {
                 </div>
               </div>
             )}
-            {(recentEmotions || [1]).length === 0 && (
+            {(recentEmotions || []).length === 0 && (
               <div className={classes.emptyStateContainer}>
                 <EmptyEmotionState />
               </div>

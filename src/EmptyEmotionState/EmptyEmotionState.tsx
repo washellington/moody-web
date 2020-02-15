@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import NavBar from "../NavBar/NavBar";
 import emptyStateImage from "../assets/empty_state/embarassed_1_.svg";
@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
 
 const EmptyEmotionState: React.FC = () => {
   const classes = useStyles();
-
+  const history = useHistory();
   return (
     <div id="EmptyStateEmotion">
       <img src={emptyStateImage} className="empty_state_emotions" alt="logo" />
@@ -21,7 +21,14 @@ const EmptyEmotionState: React.FC = () => {
         <br /> not have any mood
         <br /> entries
       </p>
-      <button type="button">Log Mood</button>
+      <button
+        type="button"
+        onClick={() => {
+          history.push("/log_mood");
+        }}
+      >
+        Log Mood
+      </button>
     </div>
   );
 };

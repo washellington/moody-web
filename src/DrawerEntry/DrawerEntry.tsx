@@ -14,9 +14,11 @@ import {
 } from "@material-ui/core";
 import Emotion from "../Emotion/Emotion";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
-import { EmotionEntry } from "../Overview/Overview";
 import "./DrawerEntry.scss";
 import EmotionSlider from "../EmotionSlider/EmotionSlider";
+import { MentalState } from "../types";
+import { useSelector } from "react-redux";
+import { AppState } from "../reducer";
 const useStyles = makeStyles(theme => ({
   root: {
     width: "30vw",
@@ -46,14 +48,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-interface DrawerEntryProp {
-  entry: EmotionEntry;
-}
-
-const DrawerEntry: React.FC<DrawerEntryProp> = props => {
+const DrawerEntry: React.FC = () => {
   const classes = useStyles();
 
-  const { entry } = props;
+  const entry = useSelector<AppState, MentalState>(
+    state => state.selectedEntry as MentalState
+  );
 
   const [open, setOpen] = React.useState(false);
 

@@ -170,7 +170,10 @@ const NavBar: React.FC = () => {
                 <ListItemIcon>
                   <DateRangeIcon
                     className={`${
-                      history.location.pathname == "/journal" ? "active" : ""
+                      history.location.pathname == "/journal" ||
+                      history.location.pathname == "/log_mood"
+                        ? "active"
+                        : ""
                     } web-nav-icon`}
                   />
                 </ListItemIcon>

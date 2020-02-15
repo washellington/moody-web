@@ -1,12 +1,12 @@
-import { EmotionEntry } from "../Overview/Overview";
 import React from "react";
 import { makeStyles } from "@material-ui/core";
 import "./EmotionEntryReview.scss";
 import moment from "moment";
 import { useMediaQuery } from "react-responsive";
+import { MentalState } from "../types";
 
 interface Prop {
-  emotion: EmotionEntry;
+  emotion: MentalState;
 }
 
 const useStyles = makeStyles(theme => ({
@@ -38,7 +38,7 @@ const EmotionEntryReview: React.FC<Prop> = props => {
       }
     >
       <span className={classes.emotionDate}>
-        {moment(emotion.date).format("MM/DD/YYYY")}
+        {moment(emotion.entry_date).format("MM/DD/YYYY")}
       </span>
       <span
         className={isMobile ? classes.emotionNotes : classes.emotioNotesWeb}

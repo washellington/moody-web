@@ -22,3 +22,36 @@
     }
   }
 }
+@media only screen and (max-width: 600px) {
+  #addEmotionForm {
+    button {
+      @include web_std_input;
+      display: block;
+      width: 100%;
+      margin-bottom: 25px;
+    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    .emotion {
+      width: 100%;
+      border-radius: 6px;
+    }
+    p {
+      font-family: Roboto;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      color: $primary_color;
+    }
+
+    textarea {
+      width: 247px / $mock_screen_width * 100vw;
+      height: 151px / $mock_screen_height * 100vh;
+      margin-bottom: 25px;
+      border-radius: 6px;
+    }
+  }
+}

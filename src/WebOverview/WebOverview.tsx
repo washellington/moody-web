@@ -6,6 +6,7 @@ import EditIcon from "@material-ui/icons/Edit";
 
 import "./WebOverview.scss";
 import EmotionEntryReview from "../EmotionEntryReview/EmotionEntryReview";
+import { MentalState } from "../types";
 const useStyles = makeStyles(theme => ({
   root: {
     marginLeft: WEB_DRAWER_WIDTH
@@ -43,9 +44,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const WebOverview: React.FC = () => {
-  const classes = useStyles();
+interface WebOverviewProps {
+  recentEntries: MentalState[];
+}
 
+const WebOverview: React.FC<WebOverviewProps> = props => {
+  const classes = useStyles();
+  const { recentEntries } = props;
   return (
     <div id="WebOverview" className={classes.root}>
       <h1>Overview</h1>
@@ -61,18 +66,7 @@ const WebOverview: React.FC = () => {
           <div className={classes.floatLinkRight}>
             <a className="accent-link">View Journal</a>
             <div className={classes.recentEntryListContainer + " "}>
-              {[
-                {
-                  rating: 3,
-                  notes: "hello",
-                  date: new Date()
-                },
-                {
-                  rating: 5,
-                  notes: "hello",
-                  date: new Date()
-                }
-              ].map((x, i) => {
+              {recentEntries.map((x, i) => {
                 return (
                   <EmotionEntryReview key={`emotion-entry-${i}`} emotion={x} />
                 );

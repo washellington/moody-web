@@ -1,7 +1,10 @@
 import axios from "axios";
+import { MentalState } from "./types";
 
 const LOGIN_URL = "authorization/auth";
-const CREATE_URL = "/users";
+const CREATE_URL = "users";
+const RECENT_MOOD_URL = "mental_state/recent";
+const LOG_MOOD = "mental_state";
 export const api = axios.create({
   baseURL: "http://localhost:1234",
   timeout: 5000,
@@ -10,14 +13,16 @@ export const api = axios.create({
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*" // whatever you want
+    "Access-Control-Allow-Origin": "*",
+    Authorization: `Bearer ${localStorage.token}`
   }
 });
 
 export interface LoginResponse {
-  user: {
-    user_id: number;
-  };
+  userId: string;
+  token: string;
+  refreshToken: string;
+  errors?: string;
 }
 
 export const loginUser = (email: string, password: string) => {
@@ -32,4 +37,12 @@ export const createUser = (email: string, password: string) => {
     email,
     password
   });
+};
+
+export const getRecentMoods = () => {
+  return api.get(RECENT_MOOD_URL);
+};
+
+export const logMood = (entry: MentalState) => {
+  return api.put(LOG_MOOD, entry);
 };

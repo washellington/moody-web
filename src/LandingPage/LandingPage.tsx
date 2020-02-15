@@ -41,9 +41,10 @@ const LandingPage: React.FC = () => {
         loginUser(values.email, values.password)
           .then((resp: AxiosResponse<LoginResponse>) => {
             const { data } = resp;
-            console.log(data);
-            if (data && data.user) {
-              dispatch(AppActions.loginUser({ user_id: data.user.user_id }));
+            if (!data.errors) {
+              console.log(data);
+              localStorage.setItem("token", data.token);
+              dispatch(AppActions.loginUser({ userId: data.userId }));
               history.push("/dashboard");
             } else {
               toast.error(ALERT_MSG.INVALID_LOGIN);

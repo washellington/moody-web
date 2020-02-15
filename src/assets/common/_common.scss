@@ -9,6 +9,7 @@ $border_color: rgba(149, 160, 191, 0.2);
 $button_light_color: #fefefe;
 $button_light_text_color: #808080;
 $error_color: #ed6f5f;
+$mobile_header_height: 56px;
 @mixin round_border_radius {
   border-radius: $round_radius;
 }

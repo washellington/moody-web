@@ -24,27 +24,21 @@ const Journal: React.FC = () => {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <>
-      <NavBar />
-      <div className={classes.root} id="Journal">
-        <Calendar
-          onClickDay={() => {
-            setOpen(true);
-          }}
-        />
-        <Drawer
-          className={classes.drawerEntry}
-          anchor="right"
-          onClose={() => setOpen(false)}
-          open={open}
-        >
-          <DrawerEntry
-            entry={{ rating: 3, notes: "hello", date: new Date() }}
-          />
-        </Drawer>
-      </div>
-      <AddEmotionEntry />
-    </>
+    <div className={classes.root} id="Journal">
+      <Calendar
+        onClickDay={() => {
+          setOpen(true);
+        }}
+      />
+      <Drawer
+        className={classes.drawerEntry}
+        anchor="right"
+        onClose={() => setOpen(false)}
+        open={open}
+      >
+        <DrawerEntry />
+      </Drawer>
+    </div>
   );
 };
 

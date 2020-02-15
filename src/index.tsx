@@ -17,6 +17,8 @@ import loggerMiddleware from "./middleware/logger";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CreateAccount from "./CreateAccount/CreateAccount";
+import JournalPage from "./JournalPage";
+import LogMoodPage from "./LogMoodPage";
 
 const middlewareEnhancer = applyMiddleware(loggerMiddleware, thunkMiddleware);
 
@@ -28,8 +30,8 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={App} />
         <Route path="/dashboard" component={Overview} />
-        <Route path="/log_mood" component={LogMood} />
-        <Route path="/journal" component={Journal} />
+        <Route path="/log_mood" component={LogMoodPage} />
+        <Route path="/journal" component={JournalPage} />
         <Route path="/create_account" component={CreateAccount} />
       </Switch>
     </BrowserRouter>
