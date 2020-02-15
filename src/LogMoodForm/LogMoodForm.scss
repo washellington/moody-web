@@ -3,24 +3,6 @@
 @import "../assets/common/web";
 
 #LogMood {
-  button {
-    //@include mobile_std_input;
-  }
-
-  button {
-    font-size: 11px;
-    text-transform: uppercase;
-    font-weight: bold;
-    background-color: $button_light_color;
-    &[type="button"] {
-      color: $button_light_text_color;
-    }
-    &[type="submit"] {
-      border: 0;
-      background-color: $primary_color;
-      color: $button_light_color;
-    }
-  }
 }
 @media only screen and (max-width: 600px) {
   #addEmotionForm {
@@ -29,7 +11,20 @@
       display: block;
       width: 100%;
       margin-bottom: 25px;
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: bold;
+      background-color: $button_light_color;
+      &[type="button"] {
+        color: $button_light_text_color;
+      }
+      &[type="submit"] {
+        border: 0;
+        background-color: $primary_color;
+        color: $button_light_color;
+      }
     }
+
     display: flex;
     flex-direction: column;
     justify-content: center;

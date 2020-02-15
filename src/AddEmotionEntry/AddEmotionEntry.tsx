@@ -14,13 +14,15 @@ interface AddEmotionEntryProp {
 }
 
 const AddEmotionEntry: React.FC<AddEmotionEntryProp> = props => {
-  const { open } = props;
+  const { open = false } = props;
+
+  const [openDialog, setOpenDialog] = React.useState(open);
 
   return (
     <>
       <Dialog
-        open={open}
-        onClose={() => console.log("onclose")}
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -35,7 +37,7 @@ const AddEmotionEntry: React.FC<AddEmotionEntryProp> = props => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => console.log("onclose")} color="primary">
+          <Button onClick={() => setOpenDialog(false)} color="primary">
             Cancel
           </Button>
           <Button onClick={() => console.log("onclose")} color="primary">

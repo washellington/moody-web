@@ -5,6 +5,7 @@ const LOGIN_URL = "authorization/auth";
 const CREATE_URL = "users";
 const RECENT_MOOD_URL = "mental_state/recent";
 const LOG_MOOD = "mental_state";
+const DEFAULT_MOOD_TYPE = "mood_type/default";
 export const api = axios.create({
   baseURL: "http://localhost:1234",
   timeout: 5000,
@@ -45,4 +46,8 @@ export const getRecentMoods = () => {
 
 export const logMood = (entry: MentalState) => {
   return api.put(LOG_MOOD, entry);
+};
+
+export const getDefaultMoodType = () => {
+  return api.get(DEFAULT_MOOD_TYPE);
 };

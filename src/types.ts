@@ -6,3 +6,8 @@ export interface MentalState {
   user: string;
   notes: string;
 }
+
+export interface MoodTypeDTO {
+  _id: string;
+  err?: string;
+}

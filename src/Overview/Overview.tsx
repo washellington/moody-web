@@ -8,11 +8,14 @@ import EmptyEmotionState from "../EmptyEmotionState/EmptyEmotionState";
 import EmotionEntryReview from "../EmotionEntryReview/EmotionEntryReview";
 import { useMediaQuery } from "react-responsive";
 import WebOverview from "../WebOverview/WebOverview";
-import { getRecentMoods } from "../service";
+import { getRecentMoods, getDefaultMoodType } from "../service";
 import { AppActions } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../reducer";
-import { MentalState } from "../types";
+import { MentalState, MoodTypeDTO } from "../types";
+import { AxiosResponse } from "axios";
+import { ALERT_MSG } from "../alerts";
+import { toast } from "react-toastify";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -65,6 +68,13 @@ const Overview: React.FC<Props> = props => {
       console.log(recentEmotions);
       dispatch(AppActions.getRecentEntries(recentEmotions));
     });
+
+    getDefaultMoodType()
+      .then((data: AxiosResponse<MoodTypeDTO>) => {
+        if (!data.data.err) dispatch(AppActions.setMoodTypeId(data.data._id));
+        else toast.error(ALERT_MSG.errorMessage(data.data.err as string));
+      })
+      .catch(err => toast.error(ALERT_MSG.errorMessage(err)));
   }, []);
 
   return (

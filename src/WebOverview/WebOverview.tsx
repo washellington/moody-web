@@ -7,6 +7,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import "./WebOverview.scss";
 import EmotionEntryReview from "../EmotionEntryReview/EmotionEntryReview";
 import { MentalState } from "../types";
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles(theme => ({
   root: {
     marginLeft: WEB_DRAWER_WIDTH
@@ -51,6 +52,7 @@ interface WebOverviewProps {
 const WebOverview: React.FC<WebOverviewProps> = props => {
   const classes = useStyles();
   const { recentEntries } = props;
+  const history = useHistory();
   return (
     <div id="WebOverview" className={classes.root}>
       <h1>Overview</h1>
@@ -79,7 +81,11 @@ const WebOverview: React.FC<WebOverviewProps> = props => {
         </div> */}
       </div>
       <div className={classes.fabContainer}>
-        <Fab color="inherit" aria-label="log mood">
+        <Fab
+          color="inherit"
+          aria-label="log mood"
+          onClick={() => history.push("/log_mood")}
+        >
           <EditIcon className="fab-button" />
         </Fab>
       </div>
