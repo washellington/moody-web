@@ -61,18 +61,21 @@ const Overview: React.FC<Props> = props => {
   const recentEntries = useSelector<AppState, MentalState[]>(
     state => state.recentEntries
   );
+  const selectedMoodType = useSelector<AppState, string>(
+    state => state.selectedMoodTypeId
+  );
 
   useEffect(() => {
-    getRecentMoods().then(data => {
-      const recentEmotions = data.data;
-      console.log(recentEmotions);
-      dispatch(AppActions.getRecentEntries(recentEmotions));
-    });
-
     getDefaultMoodType()
       .then((data: AxiosResponse<MoodTypeDTO>) => {
-        if (!data.data.err) dispatch(AppActions.setMoodTypeId(data.data._id));
-        else toast.error(ALERT_MSG.errorMessage(data.data.err as string));
+        if (!data.data.err) {
+          dispatch(AppActions.setMoodTypeId(data.data._id));
+          getRecentMoods(data.data._id).then(data => {
+            const recentEmotions = data.data;
+            console.log(recentEmotions);
+            dispatch(AppActions.getRecentEntries(recentEmotions));
+          });
+        } else toast.error(ALERT_MSG.errorMessage(data.data.err as string));
       })
       .catch(err => toast.error(ALERT_MSG.errorMessage(err)));
   }, []);

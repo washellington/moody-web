@@ -7,7 +7,6 @@ import "./fonts/YuGothR.ttc";
 import "typeface-roboto";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Overview from "./Overview/Overview";
-import LogMood from "./LogMood/LogMood";
 import Journal from "./Journal/Journal";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";

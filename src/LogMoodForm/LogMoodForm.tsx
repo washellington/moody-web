@@ -1,4 +1,4 @@
-import React from "react";
+import React, { RefObject } from "react";
 import { Route, useHistory } from "react-router-dom";
 import { makeStyles, TextField, TextareaAutosize } from "@material-ui/core";
 import NavBar from "../NavBar/NavBar";
@@ -22,6 +22,7 @@ import { AppState } from "../reducer";
 import { Authentication } from "../actions";
 import { ALERT_MSG } from "../alerts";
 import { toast } from "react-toastify";
+import { MentalState } from "../types";
 
 const useStyles = makeStyles(theme => ({}));
 
@@ -29,6 +30,7 @@ interface Props {
   entryDate?: Date;
   displayTitle?: boolean;
   displayButtons?: boolean;
+  onSubmit: (entry: MentalState) => void;
 }
 
 interface InitialValueProp {
@@ -37,7 +39,7 @@ interface InitialValueProp {
   notes: string;
 }
 
-const LogMoodForm: React.FC<Props> = props => {
+const LogMoodForm = React.forwardRef<HTMLFormElement, Props>((props, ref) => {
   const classes = useStyles();
   const isMobile = useMediaQuery({ query: "(max-width: 600px)" });
 
@@ -49,10 +51,12 @@ const LogMoodForm: React.FC<Props> = props => {
     state => state.selectedMoodTypeId
   );
 
+  // const ref = React.createRef<HTMLFormElement>()
   const {
     displayButtons = true,
     displayTitle = true,
-    entryDate = new Date()
+    entryDate = new Date(),
+    onSubmit
   } = props;
   const history = useHistory();
 
@@ -73,28 +77,20 @@ const LogMoodForm: React.FC<Props> = props => {
     validationSchema: validationSchema,
     onSubmit: values => {
       console.log("formik onsubmit");
-      logMood({
+      onSubmit({
         rating: values.emotionRating,
         entry_date: values.entryDate.getTime(),
         user: jwt.userId,
         date_created: Date.now(),
         notes: values.notes,
         mood_type: selectedMoodType
-      })
-        .then(data => {
-          console.log("retuned value from log mood", data);
-          //          history.push("/journal");
-        })
-        .catch(err => {
-          toast.error(ALERT_MSG.errorMessage(err));
-          console.error("Returned with an error", err);
-        });
+      });
     }
   });
 
   return (
     <>
-      <form id="addEmotionForm" onSubmit={formik.handleSubmit}>
+      <form ref={ref} id="addEmotionForm" onSubmit={formik.handleSubmit}>
         {displayTitle && (
           <p>
             Add
@@ -124,6 +120,6 @@ const LogMoodForm: React.FC<Props> = props => {
       </form>
     </>
   );
-};
+});
 
 export default LogMoodForm;
