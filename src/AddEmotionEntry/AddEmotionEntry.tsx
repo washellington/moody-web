@@ -67,9 +67,11 @@ const AddEmotionEntry: React.FC<AddEmotionEntryProp> = props => {
           </Button>
           <Button
             onClick={() => {
-              if (ref.current) ref.current.requestSubmit();
-              console.log("onclose");
-              setOpenDialog(false);
+              if (ref.current) {
+                ref.current.requestSubmit();
+                console.log("onclose");
+                setOpenDialog(false);
+              }
             }}
             color="primary"
           >

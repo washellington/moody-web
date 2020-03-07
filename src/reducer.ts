@@ -5,20 +5,23 @@ import {
   HIDE_LOADING,
   RECENT_ENTRIES,
   SELECT_ENTRY,
-  Authentication,
   SET_MOOD_TYPE_ID
 } from "./actions";
-import { MentalState } from "./types";
+import { MentalState, Authentication } from "./types";
 
 export interface AppState {
-  authentication: Authentication | undefined;
+  authentication: Authentication;
   showLoading: boolean;
   recentEntries: MentalState[];
   selectedEntry: MentalState | undefined;
   selectedMoodTypeId: string;
 }
 const initialState: AppState = {
-  authentication: undefined,
+  authentication: {
+    userId: "",
+    email: "",
+    fullName: ""
+  },
   showLoading: false,
   recentEntries: [],
   selectedEntry: undefined,
@@ -30,7 +33,10 @@ function MoodyApp(state: AppState = initialState, action: AppAction) {
     case LOGIN_USER:
       return {
         ...state,
-        authentication: action.jwt
+        authentication: {
+          ...state.authentication,
+          userId: action.user.userId
+        }
       };
     case SHOW_LOADING:
       return {

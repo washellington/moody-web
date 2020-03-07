@@ -11,3 +11,13 @@ export interface MoodTypeDTO {
   _id: string;
   err?: string;
 }
+
+export interface Authentication {
+  userId: string;
+  email: string;
+  fullName: string;
+}
+
+export interface LoggedInUser {
+  userId: string;
+}

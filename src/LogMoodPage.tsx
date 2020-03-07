@@ -16,9 +16,9 @@ import { ALERT_MSG } from "./alerts";
 import { AxiosResponse } from "axios";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { AppActions, Authentication } from "./actions";
+import { AppActions } from "./actions";
 import { AppState } from "./reducer";
-import { MoodTypeDTO } from "./types";
+import { MoodTypeDTO, Authentication } from "./types";
 
 const LogMoodPage: React.FC = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 600px)" });

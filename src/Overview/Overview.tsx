@@ -92,6 +92,7 @@ const Overview: React.FC<Props> = props => {
         <>
           <NavBar />
           <div id="Overview">
+            <h2>Overview</h2>
             {recentEntries.length > 0 && (
               <div className={classes.overviewContainer}>
                 <div className="flex-center-container">

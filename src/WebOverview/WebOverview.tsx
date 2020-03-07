@@ -8,6 +8,9 @@ import "./WebOverview.scss";
 import EmotionEntryReview from "../EmotionEntryReview/EmotionEntryReview";
 import { MentalState } from "../types";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { AppState } from "../reducer";
+import { Authentication } from "../types";
 const useStyles = makeStyles(theme => ({
   root: {
     marginLeft: WEB_DRAWER_WIDTH
@@ -52,23 +55,47 @@ interface WebOverviewProps {
 const WebOverview: React.FC<WebOverviewProps> = props => {
   const classes = useStyles();
   const { recentEntries } = props;
+  const loggedInUser = useSelector<AppState, Authentication>(
+    state => state.authentication as Authentication
+  );
   const history = useHistory();
   return (
     <div id="WebOverview" className={classes.root}>
       <h1>Overview</h1>
+      <h2>{loggedInUser.fullName}</h2>
       <div className={classes.overviewContainer}>
         <div className={classes.overallMoodContainer}>
+          <Emotion rating={2} />
           <div>
-            <h2>Overall Mood</h2>
-            <Emotion rating={2} />
+            <div>
+              <h3>Days Logged</h3>
+              <span>3</span>
+            </div>
+            <div>
+              <h3>Average Mood</h3>
+              <span>4</span>
+            </div>
+            <div>
+              <h3>Days Missed</h3>
+              <span>4</span>
+            </div>
           </div>
         </div>
         <div>
           <h2>Recent Entries</h2>
           <div className={classes.floatLinkRight}>
             <a className="accent-link">View Journal</a>
-            <div className={classes.recentEntryListContainer + " "}>
-              {recentEntries.map((x, i) => {
+          </div>
+          <div className={classes.recentEntryListContainer + " "}>
+            <div>
+              {recentEntries.slice(0, 5).map((x, i) => {
+                return (
+                  <EmotionEntryReview key={`emotion-entry-${i}`} emotion={x} />
+                );
+              })}
+            </div>
+            <div>
+              {recentEntries.slice(5, 10).map((x, i) => {
                 return (
                   <EmotionEntryReview key={`emotion-entry-${i}`} emotion={x} />
                 );

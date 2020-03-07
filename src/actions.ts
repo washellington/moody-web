@@ -1,4 +1,4 @@
-import { MentalState } from "./types";
+import { MentalState, Authentication, LoggedInUser } from "./types";
 
 export const LOGIN_USER = "LOGIN_USER";
 export const VERIFY_USER = "VERIFY_USER";
@@ -15,7 +15,7 @@ interface SetMoodTypeId {
 
 interface LoginUser {
   type: typeof LOGIN_USER;
-  jwt: Authentication;
+  user: LoggedInUser;
 }
 interface VerifyUser {
   type: typeof VERIFY_USER;
@@ -53,14 +53,10 @@ const showLoading = () => {
   };
 };
 
-export interface Authentication {
-  userId: string;
-}
-
-const loginUser = (authentication: Authentication) => {
+const loginUser = (user: LoggedInUser) => {
   return {
     type: LOGIN_USER,
-    jwt: authentication
+    user: user
   };
 };
 

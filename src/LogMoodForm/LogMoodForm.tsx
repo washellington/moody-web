@@ -19,7 +19,7 @@ import AddEmotionEntry from "../AddEmotionEntry/AddEmotionEntry";
 import { logMood } from "../service";
 import { useSelector } from "react-redux";
 import { AppState } from "../reducer";
-import { Authentication } from "../actions";
+import { Authentication } from "../types";
 import { ALERT_MSG } from "../alerts";
 import { toast } from "react-toastify";
 import { MentalState } from "../types";
