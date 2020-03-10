@@ -27,23 +27,35 @@ const LogMoodPage: React.FC = () => {
   const authentication = useSelector<AppState, Authentication>(
     state => state.authentication as Authentication
   );
+
+  const fetchDefaultMoodType = () => {
+    getDefaultMoodType()
+      .then((data: AxiosResponse<MoodTypeDTO>) => {
+        if (!data.data.err) {
+          dispatch(AppActions.setMoodTypeId(data.data._id));
+        }
+      })
+      .catch(err => {
+        toast.error(ALERT_MSG.errorMessage(err));
+      });
+  };
+
   useEffect(() => {
-    if (authentication === undefined || !authentication.userId)
+    if (authentication === undefined || !authentication.userId) {
       getUserInformation()
         .then((data: AxiosResponse<LoginResponse>) => {
           if (data.data.errors) history.push("/");
           else {
             dispatch(AppActions.loginUser({ userId: data.data.userId }));
-            getDefaultMoodType().then((data: AxiosResponse<MoodTypeDTO>) => {
-              if (!data.data.err) {
-                dispatch(AppActions.setMoodTypeId(data.data._id));
-              }
-            });
+            fetchDefaultMoodType();
           }
         })
         .catch(err => {
           toast.error(ALERT_MSG.errorMessage(err));
         });
+    } else {
+      fetchDefaultMoodType();
+    }
   }, []);
   return (
     <>

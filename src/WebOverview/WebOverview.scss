@@ -3,6 +3,11 @@
 @import "../assets/common/web";
 
 #WebOverview {
+  @media only screen and (min-width: 600px) {
+    h1 {
+      margin-left: 4vw;
+    }
+  }
   .recent-list-container {
     width: (874px / $mock_web_width) * 100vw;
     max-width: 874px;

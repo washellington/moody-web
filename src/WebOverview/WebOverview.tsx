@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles, List, Fab } from "@material-ui/core";
 import { WEB_DRAWER_WIDTH } from "../NavBar/NavBar";
 import Emotion from "../Emotion/Emotion";
@@ -6,11 +6,20 @@ import EditIcon from "@material-ui/icons/Edit";
 
 import "./WebOverview.scss";
 import EmotionEntryReview from "../EmotionEntryReview/EmotionEntryReview";
-import { MentalState } from "../types";
+import { MentalState, MentalStateOverviewDTO } from "../types";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../reducer";
 import { Authentication } from "../types";
+import {
+  getUserInformation,
+  LoginResponse,
+  getMentalStateOverview
+} from "../service";
+import { AxiosResponse } from "axios";
+import { AppActions } from "../actions";
+import { toast } from "react-toastify";
+import { ALERT_MSG } from "../alerts";
 const useStyles = makeStyles(theme => ({
   root: {
     marginLeft: WEB_DRAWER_WIDTH
@@ -19,7 +28,8 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
+    padding: "0 4vw"
   },
   recentEntryListContainer: {
     //backgroundColor: "#E5E5E5"
@@ -45,6 +55,11 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     width: "100%",
     justifyContent: "center"
+  },
+  overviewStats: {
+    display: "flex",
+    justifyContent: "space-evenly",
+    width: "100%"
   }
 }));
 
@@ -59,6 +74,40 @@ const WebOverview: React.FC<WebOverviewProps> = props => {
     state => state.authentication as Authentication
   );
   const history = useHistory();
+  const dispatch = useDispatch();
+  const [avgMood, setAvgMood] = useState(0);
+  const [totalDays, setTotalDays] = useState(0);
+  const [daysMissed, setDaysMissed] = useState(0);
+
+  const fetchMentalStateOverview = () => {
+    getMentalStateOverview().then(
+      (data: AxiosResponse<MentalStateOverviewDTO>) => {
+        if (!data.data.err) {
+          setAvgMood(data.data.averageMood);
+          setDaysMissed(data.data.daysMissed);
+          setTotalDays(data.data.daysLogged);
+        }
+      }
+    );
+  };
+
+  useEffect(() => {
+    if (loggedInUser === undefined || !loggedInUser.userId) {
+      getUserInformation()
+        .then((data: AxiosResponse<LoginResponse>) => {
+          if (data.data.errors) history.push("/");
+          else {
+            dispatch(AppActions.loginUser({ userId: data.data.userId }));
+            fetchMentalStateOverview();
+          }
+        })
+        .catch(err => {
+          toast.error(ALERT_MSG.errorMessage(err));
+        });
+    } else {
+      fetchMentalStateOverview();
+    }
+  }, []);
   return (
     <div id="WebOverview" className={classes.root}>
       <h1>Overview</h1>
@@ -66,18 +115,18 @@ const WebOverview: React.FC<WebOverviewProps> = props => {
       <div className={classes.overviewContainer}>
         <div className={classes.overallMoodContainer}>
           <Emotion rating={2} />
-          <div>
+          <div className={classes.overviewStats}>
             <div>
               <h3>Days Logged</h3>
-              <span>3</span>
+              <span>{totalDays}</span>
             </div>
             <div>
               <h3>Average Mood</h3>
-              <span>4</span>
+              <span>{avgMood}</span>
             </div>
             <div>
               <h3>Days Missed</h3>
-              <span>4</span>
+              <span>{daysMissed}</span>
             </div>
           </div>
         </div>
@@ -87,20 +136,11 @@ const WebOverview: React.FC<WebOverviewProps> = props => {
             <a className="accent-link">View Journal</a>
           </div>
           <div className={classes.recentEntryListContainer + " "}>
-            <div>
-              {recentEntries.slice(0, 5).map((x, i) => {
-                return (
-                  <EmotionEntryReview key={`emotion-entry-${i}`} emotion={x} />
-                );
-              })}
-            </div>
-            <div>
-              {recentEntries.slice(5, 10).map((x, i) => {
-                return (
-                  <EmotionEntryReview key={`emotion-entry-${i}`} emotion={x} />
-                );
-              })}
-            </div>
+            {recentEntries.map((x, i) => {
+              return (
+                <EmotionEntryReview key={`emotion-entry-${i}`} emotion={x} />
+              );
+            })}{" "}
           </div>
         </div>
         {/* <div>

@@ -4,6 +4,7 @@ import { MentalState } from "./types";
 const LOGIN_URL = "authorization/auth";
 const CREATE_URL = "users";
 const RECENT_MOOD_URL = "mental_state/recent";
+const OVERVIEW_URL = "mental_state/overview";
 const LOG_MOOD = "mental_state";
 const DEFAULT_MOOD_TYPE = "mood_type/default";
 const GET_USER_INFO = "users/info";
@@ -58,4 +59,8 @@ export const getDefaultMoodType = () => {
 
 export const getUserInformation = () => {
   return api.get(GET_USER_INFO);
+};
+
+export const getMentalStateOverview = () => {
+  return api.get(OVERVIEW_URL);
 };

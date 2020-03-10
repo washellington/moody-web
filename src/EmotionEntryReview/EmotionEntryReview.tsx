@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    marginBottom: 10
+    marginBottom: "1vw"
   },
   emotionDate: { display: "block", textAlign: "right", padding: 5 },
   emotionNotes: { display: "block", textAlign: "center" },

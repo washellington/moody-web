@@ -10,6 +10,10 @@ $rating-1: #ed6f5f;
 
 .emotion {
   height: (120px / $mock_screen_height) * 100vh;
+  @media only screen and (min-width: 600px) {
+    padding: 0 2vw;
+    border-radius: 6px;
+  }
   .emotion-container {
     height: 100%;
     display: flex;

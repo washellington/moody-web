@@ -12,6 +12,13 @@ export interface MoodTypeDTO {
   err?: string;
 }
 
+export interface MentalStateOverviewDTO {
+  daysMissed: number;
+  averageMood: number;
+  daysLogged: number;
+  err?: string;
+}
+
 export interface Authentication {
   userId: string;
   email: string;
