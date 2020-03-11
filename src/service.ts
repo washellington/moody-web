@@ -8,6 +8,7 @@ const OVERVIEW_URL = "mental_state/overview";
 const LOG_MOOD = "mental_state";
 const DEFAULT_MOOD_TYPE = "mood_type/default";
 const GET_USER_INFO = "users/info";
+const MENTAL_STATE_BY_MONTH_URL = "mental_state/month";
 
 export const api = axios.create({
   baseURL: "http://localhost:1234",
@@ -63,4 +64,14 @@ export const getUserInformation = () => {
 
 export const getMentalStateOverview = () => {
   return api.get(OVERVIEW_URL);
+};
+
+export const getMentalStateByMonth = (
+  month: number,
+  year: number,
+  moodType: string
+) => {
+  return api.get(MENTAL_STATE_BY_MONTH_URL, {
+    params: { month: month, year: year, mood_type_id: moodType }
+  });
 };

@@ -19,6 +19,11 @@ export interface MentalStateOverviewDTO {
   err?: string;
 }
 
+export interface MonthMentalStateDTO {
+  mental_states: MentalState[];
+  err?: string;
+}
+
 export interface Authentication {
   userId: string;
   email: string;

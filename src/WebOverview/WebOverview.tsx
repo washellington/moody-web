@@ -80,15 +80,17 @@ const WebOverview: React.FC<WebOverviewProps> = props => {
   const [daysMissed, setDaysMissed] = useState(0);
 
   const fetchMentalStateOverview = () => {
-    getMentalStateOverview().then(
-      (data: AxiosResponse<MentalStateOverviewDTO>) => {
+    getMentalStateOverview()
+      .then((data: AxiosResponse<MentalStateOverviewDTO>) => {
         if (!data.data.err) {
           setAvgMood(data.data.averageMood);
           setDaysMissed(data.data.daysMissed);
           setTotalDays(data.data.daysLogged);
         }
-      }
-    );
+      })
+      .catch(err => {
+        toast.error(ALERT_MSG.errorMessage(err));
+      });
   };
 
   useEffect(() => {
