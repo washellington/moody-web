@@ -31,18 +31,21 @@ $rating-1: #ed6f5f;
     }
   }
 }
-.rating-1 {
-  background-color: $rating-1;
-}
-.rating-2 {
-  background-color: $rating-2;
-}
-.rating-3 {
-  background-color: $rating-3;
-}
-.rating-4 {
-  background-color: $rating-4;
-}
-.rating-5 {
-  background-color: $rating-5;
+#Journal,
+body {
+  .rating-1 {
+    background-color: $rating-1;
+  }
+  .rating-2 {
+    background-color: $rating-2;
+  }
+  .rating-3 {
+    background-color: $rating-3;
+  }
+  .rating-4 {
+    background-color: $rating-4;
+  }
+  .rating-5 {
+    background-color: $rating-5;
+  }
 }

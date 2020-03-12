@@ -15,6 +15,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../reducer";
 import { AppActions } from "../actions";
 
+import "../Emotion/Emotion.scss";
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
@@ -30,7 +32,7 @@ const Journal: React.FC = () => {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
-  const [mentalState, setMentalStates] = React.useState<MentalState[]>([]);
+  const [mentalStates, setMentalStates] = React.useState<MentalState[]>([]);
 
   const selectedMoodType = useSelector<AppState, string>(
     state => state.selectedMoodTypeId
@@ -67,15 +69,24 @@ const Journal: React.FC = () => {
   return (
     <div className={classes.root} id="Journal">
       <Calendar
+        tileClassName={({ date, view }) => {
+          let entry = mentalStates.find(x => {
+            return new Date(x.entry_date).getDate() == date.getDate();
+          });
+
+          return view === "month" && entry != null
+            ? `rating-${entry.rating}`
+            : null;
+        }}
         onClickDay={() => {
           setOpen(true);
         }}
         onClickMonth={date => {
           console.log("onClickedMonth: ", date);
         }}
-        onActiveDateChange={viewCallBack => {
-          if (viewCallBack.view == "month") {
-            fetchMentalStateByMonth(viewCallBack.activeStartDate);
+        onActiveDateChange={({ activeStartDate, view }) => {
+          if (view == "month") {
+            fetchMentalStateByMonth(activeStartDate);
           }
         }}
       />
