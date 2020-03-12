@@ -65,7 +65,7 @@ const DrawerEntry: React.FC = () => {
             <ArrowBackIosIcon />
             Return to Journal
           </a>
-          <Emotion rating={3} />
+          <Emotion rating={entry ? entry.rating - 1 : undefined} />
         </div>
         <div className={classes.buttonContainer}>
           <Button variant="contained" className="edit-button">

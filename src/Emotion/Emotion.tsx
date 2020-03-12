@@ -10,13 +10,13 @@ import emotion_4 from "../assets/ratings/emotions-0.png";
 const useStyles = makeStyles(theme => ({}));
 
 interface Props {
-  rating: number;
+  rating: number | undefined;
 }
 
 const Emotion: React.FC<Props> = props => {
   const classes = useStyles();
 
-  const { rating } = props;
+  const { rating = -1 } = props;
 
   const getEmotion = (rating: number) => {
     switch (rating) {
@@ -30,6 +30,8 @@ const Emotion: React.FC<Props> = props => {
         return <img src={emotion_2} className="emoji" alt="logo" />;
       case 1:
         return <img src={emotion_1} className="emoji" alt="logo" />;
+      default:
+        return "";
     }
   };
 

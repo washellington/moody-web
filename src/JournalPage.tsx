@@ -9,7 +9,6 @@ const JournalPage: React.FC = () => {
     <>
       <NavBar />
       <Journal />
-      <AddEmotionEntry open={false} />
     </>
   );
 };
