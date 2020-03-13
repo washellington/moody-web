@@ -105,6 +105,7 @@ const Journal: React.FC = () => {
         }}
         onActiveDateChange={({ activeStartDate, view }) => {
           if (view == "month") {
+            dispatch(AppActions.setMentalStates([]));
             dispatch(
               fetchMentalStateByMonth(activeStartDate, selectedMoodType)
             );

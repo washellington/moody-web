@@ -116,7 +116,7 @@ const WebOverview: React.FC<WebOverviewProps> = props => {
       <h2>{loggedInUser.fullName}</h2>
       <div className={classes.overviewContainer}>
         <div className={classes.overallMoodContainer}>
-          <Emotion rating={2} />
+          <Emotion rating={avgMood} />
           <div className={classes.overviewStats}>
             <div>
               <h3>Days Logged</h3>

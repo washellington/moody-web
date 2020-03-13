@@ -25,8 +25,8 @@ const EmotionSlider: React.FC<Props> = props => {
         valueLabelDisplay="auto"
         step={1}
         marks
-        min={0}
-        max={4}
+        min={1}
+        max={5}
         onChange={(event: any, newValue: number | number[]) => {
           setRating(newValue as number);
           onChange(newValue as number);

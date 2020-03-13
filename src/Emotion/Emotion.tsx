@@ -20,15 +20,15 @@ const Emotion: React.FC<Props> = props => {
 
   const getEmotion = (rating: number) => {
     switch (rating) {
-      case 0:
-        return <img src={emotion_0} className="emoji" alt="logo" />;
-      case 4:
-        return <img src={emotion_4} className="emoji" alt="logo" />;
-      case 3:
-        return <img src={emotion_3} className="emoji" alt="logo" />;
-      case 2:
-        return <img src={emotion_2} className="emoji" alt="logo" />;
       case 1:
+        return <img src={emotion_0} className="emoji" alt="logo" />;
+      case 5:
+        return <img src={emotion_4} className="emoji" alt="logo" />;
+      case 4:
+        return <img src={emotion_3} className="emoji" alt="logo" />;
+      case 3:
+        return <img src={emotion_2} className="emoji" alt="logo" />;
+      case 2:
         return <img src={emotion_1} className="emoji" alt="logo" />;
       default:
         return "";
@@ -36,7 +36,7 @@ const Emotion: React.FC<Props> = props => {
   };
 
   return (
-    <div className={`emotion rating-${rating + 1}`}>
+    <div className={`emotion rating-${rating}`}>
       <div className="emotion-container">{getEmotion(rating)}</div>
     </div>
   );
