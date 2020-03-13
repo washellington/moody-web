@@ -15,7 +15,12 @@ import {
 } from "@material-ui/core";
 import DrawerEntry from "../DrawerEntry/DrawerEntry";
 import AddEmotionEntry from "../AddEmotionEntry/AddEmotionEntry";
-import { getMentalStateByMonth, getDefaultMoodType, logMood } from "../service";
+import {
+  getMentalStateByMonth,
+  getDefaultMoodType,
+  logMood,
+  fetchMentalStateByMonth
+} from "../service";
 import { AxiosResponse } from "axios";
 import { MentalState, MonthMentalStateDTO, MoodTypeDTO } from "../types";
 import { toast } from "react-toastify";
@@ -44,27 +49,17 @@ const Journal: React.FC = () => {
 
   const [open, setOpen] = React.useState(false);
   const [openAddEntry, setOpenAddEntry] = React.useState(false);
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
   const ref = React.createRef<HTMLFormElement>();
 
-  const [mentalStates, setMentalStates] = React.useState<MentalState[]>([]);
+  const mentalStates = useSelector<AppState, MentalState[]>(
+    state => state.mentalStates
+  );
 
   const selectedMoodType = useSelector<AppState, string>(
     state => state.selectedMoodTypeId
   );
   const dispatch = useDispatch();
-
-  const fetchMentalStateByMonth = (date: Date) => {
-    getMentalStateByMonth(date.getMonth(), date.getFullYear(), selectedMoodType)
-      .then((data: AxiosResponse<MonthMentalStateDTO>) => {
-        if (!data.data.err) {
-          console.log("Months mental state:", data.data.mental_states);
-          setMentalStates(data.data.mental_states);
-        }
-      })
-      .catch(err => {
-        toast.error(ALERT_MSG.errorMessage(err));
-      });
-  };
 
   useEffect(() => {
     if (!selectedMoodType) {
@@ -77,7 +72,7 @@ const Journal: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    fetchMentalStateByMonth(new Date());
+    dispatch(fetchMentalStateByMonth(new Date(), selectedMoodType));
   }, [selectedMoodType]);
 
   return (
@@ -92,10 +87,12 @@ const Journal: React.FC = () => {
             ? `rating-${entry.rating}`
             : null;
         }}
+        showNeighboringMonth={false}
         onClickDay={date => {
           let selectedEntry = mentalStates.find(x => {
             return new Date(x.entry_date).getDate() == date.getDate();
           });
+          setSelectedDate(date);
           setOpenAddEntry(!(selectedEntry !== undefined));
           setOpen(selectedEntry !== undefined);
           dispatch({
@@ -108,7 +105,9 @@ const Journal: React.FC = () => {
         }}
         onActiveDateChange={({ activeStartDate, view }) => {
           if (view == "month") {
-            fetchMentalStateByMonth(activeStartDate);
+            dispatch(
+              fetchMentalStateByMonth(activeStartDate, selectedMoodType)
+            );
           }
         }}
       />
@@ -120,59 +119,13 @@ const Journal: React.FC = () => {
       >
         <DrawerEntry />
       </Drawer>
-      <Dialog
+      <AddEmotionEntry
         open={openAddEntry}
+        entryDate={selectedDate}
         onClose={() => setOpenAddEntry(false)}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Add Entry"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            <LogMoodForm
-              ref={ref}
-              onSubmit={(entry: MentalState) => {
-                logMood({
-                  rating: entry.rating,
-                  entry_date: entry.entry_date,
-                  user: entry.user,
-                  date_created: entry.date_created,
-                  notes: entry.notes,
-                  mood_type: entry.mood_type
-                })
-                  .then(data => {
-                    console.log("retuned value from log mood", data);
-                    //          history.push("/journal");
-                  })
-                  .catch(err => {
-                    toast.error(ALERT_MSG.errorMessage(err));
-                    console.error("Returned with an error", err);
-                  });
-              }}
-              entryDate={new Date()}
-              displayTitle={false}
-              displayButtons={false}
-            />
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenAddEntry(false)} color="primary">
-            Cancel
-          </Button>
-          <Button
-            onClick={() => {
-              if (ref.current) {
-                ref.current.requestSubmit();
-                console.log("onclose");
-                setOpenAddEntry(false);
-              }
-            }}
-            color="primary"
-          >
-            Add
-          </Button>
-        </DialogActions>
-      </Dialog>
+        onCancel={() => setOpenAddEntry(false)}
+        onConfirm={() => setOpenAddEntry(false)}
+      />
     </div>
   );
 };

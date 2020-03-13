@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 
 import Journal from "./Journal/Journal";
 import { useMediaQuery } from "react-responsive";
-import AddEmotionEntry from "./AddEmotionEntry/AddEmotionEntry";
+import AddEmotionEntry, {
+  InitialValueProp
+} from "./AddEmotionEntry/AddEmotionEntry";
 import LogMoodForm from "./LogMoodForm/LogMoodForm";
 import NavBar from "./NavBar/NavBar";
 import {
@@ -19,6 +21,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppActions } from "./actions";
 import { AppState } from "./reducer";
 import { MoodTypeDTO, Authentication } from "./types";
+import { DEFAULT_EMOTION_RATING } from "./EmotionSlider/EmotionSlider";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 const LogMoodPage: React.FC = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 600px)" });
@@ -27,6 +32,28 @@ const LogMoodPage: React.FC = () => {
   const authentication = useSelector<AppState, Authentication>(
     state => state.authentication as Authentication
   );
+
+  const jwt = useSelector<AppState, Authentication>(
+    state => state.authentication as Authentication
+  );
+
+  const selectedMoodType = useSelector<AppState, string>(
+    state => state.selectedMoodTypeId
+  );
+
+  const [open, setOpen] = React.useState(true);
+
+  const initialValue: InitialValueProp = {
+    emotionRating: DEFAULT_EMOTION_RATING,
+    entryDate: new Date(),
+    notes: ""
+  };
+
+  const validationSchema = Yup.object({
+    emotionRating: Yup.number().required(),
+    entryDate: Yup.date().required(),
+    notes: Yup.string().required()
+  });
 
   const fetchDefaultMoodType = () => {
     getDefaultMoodType()
@@ -60,15 +87,18 @@ const LogMoodPage: React.FC = () => {
   return (
     <>
       {isMobile && (
-        <LogMoodForm
-          onSubmit={entry => {
+        <Formik
+          initialValues={initialValue}
+          validationSchema={validationSchema}
+          onSubmit={values => {
+            console.log("formik onsubmit");
             logMood({
-              rating: entry.rating,
-              entry_date: entry.entry_date,
-              user: entry.user,
-              date_created: entry.date_created,
-              notes: entry.notes,
-              mood_type: entry.mood_type
+              rating: values.emotionRating,
+              entry_date: values.entryDate.getTime(),
+              user: jwt.userId,
+              date_created: Date.now(),
+              notes: values.notes,
+              mood_type: selectedMoodType
             })
               .then(data => {
                 console.log("retuned value from log mood", data);
@@ -79,13 +109,24 @@ const LogMoodPage: React.FC = () => {
                 console.error("Returned with an error", err);
               });
           }}
-        />
+        >
+          <LogMoodForm />
+        </Formik>
       )}
       {!isMobile && (
         <>
           <NavBar />
           <Journal />
-          <AddEmotionEntry open={true} />
+          <AddEmotionEntry
+            open={open}
+            onCancel={() => {
+              setOpen(false);
+            }}
+            onClose={() => {
+              setOpen(false);
+            }}
+            onConfirm={() => setOpen(false)}
+          />
         </>
       )}
     </>

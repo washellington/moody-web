@@ -1,6 +1,11 @@
-import axios from "axios";
-import { MentalState } from "./types";
-
+import axios, { AxiosResponse } from "axios";
+import { MentalState, MonthMentalStateDTO } from "./types";
+import { AppActions } from "./actions";
+import { toast } from "react-toastify";
+import { ALERT_MSG } from "./alerts";
+import { ThunkDispatch, ThunkAction } from "redux-thunk";
+import { AppState } from "./reducer";
+import { Action } from "redux";
 const LOGIN_URL = "authorization/auth";
 const CREATE_URL = "users";
 const RECENT_MOOD_URL = "mental_state/recent";
@@ -74,4 +79,22 @@ export const getMentalStateByMonth = (
   return api.get(MENTAL_STATE_BY_MONTH_URL, {
     params: { month: month, year: year, mood_type_id: moodType }
   });
+};
+
+export const fetchMentalStateByMonth = (
+  date: Date,
+  selectedMoodType: string
+): ThunkAction<void, AppState, undefined, Action<string>> => {
+  return dispatch => {
+    getMentalStateByMonth(date.getMonth(), date.getFullYear(), selectedMoodType)
+      .then((data: AxiosResponse<MonthMentalStateDTO>) => {
+        if (!data.data.err) {
+          console.log("Months mental state:", data.data.mental_states);
+          dispatch(AppActions.setMentalStates(data.data.mental_states));
+        }
+      })
+      .catch(err => {
+        toast.error(ALERT_MSG.errorMessage(err));
+      });
+  };
 };

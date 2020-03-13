@@ -1,4 +1,4 @@
-import { MentalState, Authentication, LoggedInUser } from "./types";
+import { LoggedInUser, MentalState } from "./types";
 
 export const LOGIN_USER = "LOGIN_USER";
 export const VERIFY_USER = "VERIFY_USER";
@@ -7,6 +7,13 @@ export const HIDE_LOADING = "HIDE_LOADING";
 export const RECENT_ENTRIES = "RECENT_ENTRIES";
 export const SELECT_ENTRY = "SELECT_ENTRY";
 export const SET_MOOD_TYPE_ID = "SET_MOOD_TYPE_ID";
+
+export const SET_MENTAL_STATES = "SET_MENTAL_STATES";
+
+interface SetMentalStates {
+  type: typeof SET_MENTAL_STATES;
+  mentalStates: MentalState[];
+}
 
 interface SetMoodTypeId {
   type: typeof SET_MOOD_TYPE_ID;
@@ -45,7 +52,15 @@ export type AppAction =
   | HideLoading
   | RecentEntries
   | SelectEntry
-  | SetMoodTypeId;
+  | SetMoodTypeId
+  | SetMentalStates;
+
+const setMentalStates = (mentalStates: MentalState[]) => {
+  return {
+    type: SET_MENTAL_STATES,
+    mentalStates
+  };
+};
 
 const showLoading = () => {
   return {
@@ -86,5 +101,6 @@ export const AppActions = {
   loginUser,
   getRecentEntries,
   selectEntry,
-  setMoodTypeId
+  setMoodTypeId,
+  setMentalStates
 };

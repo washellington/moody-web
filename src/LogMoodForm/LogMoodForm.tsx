@@ -12,10 +12,12 @@ import EmotionSlider, {
 import * as Yup from "yup";
 
 import "./LogMoodForm.scss";
-import { useFormik } from "formik";
+import { useFormik, useFormikContext } from "formik";
 import Journal from "../Journal/Journal";
 import { useMediaQuery } from "react-responsive";
-import AddEmotionEntry from "../AddEmotionEntry/AddEmotionEntry";
+import AddEmotionEntry, {
+  InitialValueProp
+} from "../AddEmotionEntry/AddEmotionEntry";
 import { logMood } from "../service";
 import { useSelector } from "react-redux";
 import { AppState } from "../reducer";
@@ -30,67 +32,32 @@ interface Props {
   entryDate?: Date;
   displayTitle?: boolean;
   displayButtons?: boolean;
-  onSubmit: (entry: MentalState) => void;
 }
 
-interface InitialValueProp {
-  emotionRating: number;
-  entryDate: Date;
-  notes: string;
-}
-
-const LogMoodForm = React.forwardRef<HTMLFormElement, Props>((props, ref) => {
+const LogMoodForm: React.FC<Props> = props => {
   const classes = useStyles();
   const isMobile = useMediaQuery({ query: "(max-width: 600px)" });
-
-  const jwt = useSelector<AppState, Authentication>(
-    state => state.authentication as Authentication
-  );
-
-  const selectedMoodType = useSelector<AppState, string>(
-    state => state.selectedMoodTypeId
-  );
 
   // const ref = React.createRef<HTMLFormElement>()
   const {
     displayButtons = true,
     displayTitle = true,
-    entryDate = new Date(),
-    onSubmit
+    entryDate = new Date()
   } = props;
   const history = useHistory();
 
-  const initialValue: InitialValueProp = {
-    emotionRating: DEFAULT_EMOTION_RATING,
-    entryDate: entryDate,
-    notes: ""
-  };
+  const {
+    values,
+    submitForm,
+    setFieldValue,
+    handleChange,
+    handleSubmit
+  } = useFormikContext<InitialValueProp>();
 
-  const validationSchema = Yup.object({
-    emotionRating: Yup.number().required(),
-    entryDate: Yup.date().required(),
-    notes: Yup.string().required()
-  });
-
-  const formik = useFormik({
-    initialValues: initialValue,
-    validationSchema: validationSchema,
-    onSubmit: values => {
-      console.log("formik onsubmit");
-      onSubmit({
-        rating: values.emotionRating,
-        entry_date: values.entryDate.getTime(),
-        user: jwt.userId,
-        date_created: Date.now(),
-        notes: values.notes,
-        mood_type: selectedMoodType
-      });
-    }
-  });
-
+  console.log("Logmoodform entryDate= ", entryDate);
   return (
     <>
-      <form ref={ref} id="addEmotionForm" onSubmit={formik.handleSubmit}>
+      <form id="addEmotionForm" onSubmit={handleSubmit}>
         {displayTitle && (
           <p>
             Add
@@ -100,26 +67,28 @@ const LogMoodForm = React.forwardRef<HTMLFormElement, Props>((props, ref) => {
         )}
         <EmotionSlider
           onChange={rating => {
-            formik.setFieldValue("emotionRating", rating);
-            formik.handleChange("emotionRating");
+            setFieldValue("emotionRating", rating);
+            handleChange("emotionRating");
           }}
         />
         <TextareaAutosize
           name="notes"
-          value={formik.values.notes}
-          onChange={formik.handleChange}
+          value={values.notes}
+          onChange={handleChange}
           rowsMin={5}
           placeholder="Elaborate your mood..."
         />
         {displayButtons && (
           <>
-            <button type="submit">Add</button>
+            <button type="submit" onClick={() => submitForm()}>
+              Add
+            </button>
             <button type="button">Cancel</button>
           </>
         )}
       </form>
     </>
   );
-});
+};
 
 export default LogMoodForm;
