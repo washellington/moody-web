@@ -61,6 +61,7 @@ const ShowMood: React.FC<Props> = props => {
 
   return (
     <div id="ShowMood" className={classes.root}>
+      <h1>{moment(entry.entry_date).format("MM/DD/YYYY")}</h1>
       <Emotion rating={entry.rating} />
       <div>
         <h2>Note</h2>
