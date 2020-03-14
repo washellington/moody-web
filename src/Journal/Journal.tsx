@@ -124,7 +124,6 @@ const Journal: React.FC = () => {
         <DrawerEntry
           onDelete={() => {
             setOpen(false);
-            setSelectedDate(undefined);
           }}
         />
       </Drawer>
