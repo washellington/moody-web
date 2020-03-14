@@ -10,6 +10,13 @@ export const SET_MOOD_TYPE_ID = "SET_MOOD_TYPE_ID";
 
 export const SET_MENTAL_STATES = "SET_MENTAL_STATES";
 
+export const SET_SELECTED_DATE = "SET_SELECTED_DATE";
+
+interface SetSelectedDate {
+  type: typeof SET_SELECTED_DATE;
+  date: Date;
+}
+
 interface SetMentalStates {
   type: typeof SET_MENTAL_STATES;
   mentalStates: MentalState[];
@@ -53,7 +60,15 @@ export type AppAction =
   | RecentEntries
   | SelectEntry
   | SetMoodTypeId
-  | SetMentalStates;
+  | SetMentalStates
+  | SetSelectedDate;
+
+const setSelectedDate = (date: Date) => {
+  return {
+    type: SET_SELECTED_DATE,
+    date
+  };
+};
 
 const setMentalStates = (mentalStates: MentalState[]) => {
   return {
@@ -102,5 +117,6 @@ export const AppActions = {
   getRecentEntries,
   selectEntry,
   setMoodTypeId,
-  setMentalStates
+  setMentalStates,
+  setSelectedDate
 };

@@ -32,6 +32,7 @@ import { AppActions, SELECT_ENTRY } from "../actions";
 import "../Emotion/Emotion.scss";
 import LogMoodForm from "../LogMoodForm/LogMoodForm";
 import { ref } from "yup";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -49,9 +50,7 @@ const Journal: React.FC = () => {
 
   const [open, setOpen] = React.useState(false);
   const [openAddEntry, setOpenAddEntry] = React.useState(false);
-  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(
-    new Date()
-  );
+  const selectedDate = useSelector<AppState, Date>(state => state.selectedDate);
   const ref = React.createRef<HTMLFormElement>();
 
   const mentalStates = useSelector<AppState, MentalState[]>(
@@ -62,6 +61,8 @@ const Journal: React.FC = () => {
     state => state.selectedMoodTypeId
   );
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   useEffect(() => {
     if (!selectedMoodType) {
@@ -90,18 +91,24 @@ const Journal: React.FC = () => {
             ? `rating rating-${entry.rating}`
             : null;
         }}
+        tileDisabled={({ activeStartDate, date, view }) =>
+          date.getTime() > Date.now()
+        }
         showNeighboringMonth={false}
         onClickDay={date => {
           let selectedEntry = mentalStates.find(x => {
             return new Date(x.entry_date).getDate() == date.getDate();
           });
-          setSelectedDate(date);
-          setOpenAddEntry(!(selectedEntry !== undefined));
-          setOpen(selectedEntry !== undefined);
           dispatch({
             type: SELECT_ENTRY,
             entry: selectedEntry
           });
+          dispatch(AppActions.setSelectedDate(date));
+          if (!(selectedEntry !== undefined)) {
+            history.push("/log_mood");
+          } else {
+            history.push("/show_mood");
+          }
         }}
         onClickMonth={date => {
           console.log("onClickedMonth: ", date);
@@ -114,25 +121,6 @@ const Journal: React.FC = () => {
             );
           }
         }}
-      />
-      <Drawer
-        className={classes.drawerEntry}
-        anchor="right"
-        onClose={() => setOpen(false)}
-        open={open}
-      >
-        <DrawerEntry
-          onDelete={() => {
-            setOpen(false);
-          }}
-        />
-      </Drawer>
-      <AddEmotionEntry
-        open={openAddEntry}
-        entryDate={selectedDate}
-        onClose={() => setOpenAddEntry(false)}
-        onCancel={() => setOpenAddEntry(false)}
-        onConfirm={() => setOpenAddEntry(false)}
       />
     </div>
   );

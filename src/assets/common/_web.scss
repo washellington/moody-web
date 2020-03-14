@@ -8,6 +8,7 @@ $mock_web_height: 784px;
   font-family: "YuGoth";
   border-color: $border_color;
   border-width: 1px;
+  border-style: solid;
   padding-left: 5px;
   width: (313px / $mock_web_width) * 100vw;
   height: (53px / $mock_web_height) * 100vh;

@@ -41,6 +41,8 @@ const LogMoodPage: React.FC = () => {
     state => state.selectedMoodTypeId
   );
 
+  const selectedDate = useSelector<AppState, Date>(state => state.selectedDate);
+
   const [open, setOpen] = React.useState(true);
 
   const initialValue: InitialValueProp = {
@@ -87,33 +89,36 @@ const LogMoodPage: React.FC = () => {
   return (
     <>
       {isMobile && (
-        <Formik
-          initialValues={initialValue}
-          validationSchema={validationSchema}
-          onSubmit={values => {
-            console.log("formik onsubmit");
-            logMood({
-              rating: values.emotionRating,
-              entry_date: values.entryDate.getTime(),
-              user: jwt.userId,
-              date_created: Date.now(),
-              notes: values.notes,
-              mood_type: selectedMoodType
-            })
-              .then(data => {
-                console.log("retuned value from log mood", data);
-                dispatch(
-                  fetchMentalStateByMonth(values.entryDate, selectedMoodType)
-                );
+        <>
+          <NavBar />
+          <Formik
+            initialValues={initialValue}
+            validationSchema={validationSchema}
+            onSubmit={values => {
+              console.log("formik onsubmit");
+              logMood({
+                rating: values.emotionRating,
+                entry_date: selectedDate.getTime(),
+                user: jwt.userId,
+                date_created: Date.now(),
+                notes: values.notes,
+                mood_type: selectedMoodType
               })
-              .catch(err => {
-                toast.error(ALERT_MSG.errorMessage(err));
-                console.error("Returned with an error", err);
-              });
-          }}
-        >
-          <LogMoodForm />
-        </Formik>
+                .then(data => {
+                  console.log("retuned value from log mood", data);
+                  dispatch(
+                    fetchMentalStateByMonth(values.entryDate, selectedMoodType)
+                  );
+                })
+                .catch(err => {
+                  toast.error(ALERT_MSG.errorMessage(err));
+                  console.error("Returned with an error", err);
+                });
+            }}
+          >
+            <LogMoodForm entryDate={selectedDate} />
+          </Formik>
+        </>
       )}
       {!isMobile && (
         <>

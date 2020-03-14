@@ -126,7 +126,7 @@ const Overview: React.FC<Props> = props => {
                 </div>
               </div>
             )}
-            {(recentEmotions || []).length === 0 && (
+            {recentEntries.length === 0 && (
               <div className={classes.emptyStateContainer}>
                 <EmptyEmotionState />
               </div>

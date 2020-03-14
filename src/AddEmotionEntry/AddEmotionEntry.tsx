@@ -19,7 +19,6 @@ import * as Yup from "yup";
 import moment from "moment";
 
 interface AddEmotionEntryProp {
-  entryDate?: Date;
   open: boolean;
   onClose: () => void;
   onCancel: () => void;
@@ -33,17 +32,13 @@ export interface InitialValueProp {
 }
 
 const AddEmotionEntry: React.FC<AddEmotionEntryProp> = props => {
-  const {
-    open = false,
-    onCancel,
-    onClose,
-    onConfirm,
-    entryDate = new Date()
-  } = props;
+  const { open = false, onCancel, onClose, onConfirm } = props;
 
   const jwt = useSelector<AppState, Authentication>(
     state => state.authentication as Authentication
   );
+
+  const entryDate = useSelector<AppState, Date>(state => state.selectedDate);
 
   const dispatch = useDispatch();
   const selectedMoodType = useSelector<AppState, string>(

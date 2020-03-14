@@ -24,7 +24,11 @@ import { ALERT_MSG } from "../alerts";
 import { toast } from "react-toastify";
 import { MentalState } from "../types";
 
-const useStyles = makeStyles(theme => ({}));
+const useStyles = makeStyles(theme => ({
+  buttonContainer: {
+    width: "100%"
+  }
+}));
 
 interface Props {
   entryDate?: Date;
@@ -52,7 +56,6 @@ const LogMoodForm: React.FC<Props> = props => {
     handleSubmit
   } = useFormikContext<InitialValueProp>();
 
-  console.log("Logmoodform entryDate= ", entryDate);
   return (
     <>
       <form id="addEmotionForm" onSubmit={handleSubmit}>
@@ -69,20 +72,29 @@ const LogMoodForm: React.FC<Props> = props => {
             handleChange("emotionRating");
           }}
         />
-        <TextareaAutosize
+        <TextField
           name="notes"
           value={values.notes}
           onChange={handleChange}
-          rowsMin={5}
+          rows={5}
+          multiline
+          variant="outlined"
           placeholder="Elaborate your mood..."
         />
         {displayButtons && (
-          <>
+          <div className={classes.buttonContainer}>
             <button type="submit" onClick={() => submitForm()}>
               Add
             </button>
-            <button type="button">Cancel</button>
-          </>
+            <button
+              type="button"
+              onClick={() => {
+                history.push("/journal");
+              }}
+            >
+              Cancel
+            </button>
+          </div>
         )}
       </form>
     </>

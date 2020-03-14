@@ -1,0 +1,18 @@
+@import "../assets/common/common";
+@import "../assets/common/mobile";
+@import "../assets/common/web";
+
+#ShowMood {
+  button {
+    @include web_std_input;
+    display: block;
+    &.remove-button {
+      background-color: #ed6f5f;
+      margin-bottom: 2vw;
+      color: $button_light_color;
+    }
+
+    width: 313px / $mock_screen_width * 100vw;
+    font-weight: bold;
+  }
+}

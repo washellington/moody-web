@@ -18,6 +18,8 @@ import "react-toastify/dist/ReactToastify.css";
 import CreateAccount from "./CreateAccount/CreateAccount";
 import JournalPage from "./JournalPage";
 import LogMoodPage from "./LogMoodPage";
+import ShowMood from "./ShowMood/ShowMood";
+import ShowMoodPage from "./ShowMoodPage";
 
 const middlewareEnhancer = applyMiddleware(loggerMiddleware, thunkMiddleware);
 
@@ -30,6 +32,7 @@ ReactDOM.render(
         <Route exact path="/" component={App} />
         <Route path="/dashboard" component={Overview} />
         <Route path="/log_mood" component={LogMoodPage} />
+        <Route path="/show_mood" component={ShowMoodPage} />
         <Route path="/journal" component={JournalPage} />
         <Route path="/create_account" component={CreateAccount} />
       </Switch>

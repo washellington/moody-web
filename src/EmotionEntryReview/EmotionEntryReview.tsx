@@ -4,6 +4,9 @@ import "./EmotionEntryReview.scss";
 import moment from "moment";
 import { useMediaQuery } from "react-responsive";
 import { MentalState } from "../types";
+import { AppActions } from "../actions";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 interface Prop {
   emotion: MentalState;
@@ -30,9 +33,14 @@ const EmotionEntryReview: React.FC<Prop> = props => {
   const classes = useStyles();
   const isMobile = useMediaQuery({ query: "(max-width: 600px)" });
   const { emotion } = props;
-
+  const history = useHistory();
+  const dispatch = useDispatch();
   return (
     <div
+      onClick={() => {
+        dispatch(AppActions.selectEntry(emotion));
+        history.push("/show_mood");
+      }}
       className={
         classes.root + ` emotion-review emotion-review-rating-${emotion.rating}`
       }

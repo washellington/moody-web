@@ -24,6 +24,8 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 
 import "./NavBar.scss";
+import { useDispatch } from "react-redux";
+import { AppActions } from "../actions";
 
 export const WEB_DRAWER_WIDTH = 50;
 
@@ -87,6 +89,8 @@ const NavBar: React.FC = () => {
 
   const [open, setOpen] = useState(!isMobile);
 
+  const dispatch = useDispatch();
+
   const toggleDrawer = (open: boolean) => (
     event: React.KeyboardEvent | React.MouseEvent
   ) => {
@@ -125,6 +129,7 @@ const NavBar: React.FC = () => {
                       history.push("/dashboard");
                       break;
                     case "Journal":
+                      dispatch(AppActions.setSelectedDate(new Date()));
                       history.push("/journal");
                       break;
                     // case "Reports":
