@@ -109,6 +109,7 @@ const LogMoodPage: React.FC = () => {
                   dispatch(
                     fetchMentalStateByMonth(values.entryDate, selectedMoodType)
                   );
+                  history.push("/journal");
                 })
                 .catch(err => {
                   toast.error(ALERT_MSG.errorMessage(err));

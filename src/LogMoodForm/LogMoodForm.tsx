@@ -83,9 +83,7 @@ const LogMoodForm: React.FC<Props> = props => {
         />
         {displayButtons && (
           <div className={classes.buttonContainer}>
-            <button type="submit" onClick={() => submitForm()}>
-              Add
-            </button>
+            <button type="submit">Add</button>
             <button
               type="button"
               onClick={() => {
