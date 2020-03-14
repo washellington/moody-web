@@ -5,6 +5,7 @@ export interface MentalState {
   entry_date: number;
   user: string;
   notes: string;
+  _id?: string;
 }
 
 export interface MoodTypeDTO {
@@ -24,6 +25,11 @@ export interface MonthMentalStateDTO {
   err?: string;
 }
 
+export interface MentalStateDTO {
+  mental_state: MentalState;
+  err?: string;
+}
+
 export interface Authentication {
   userId: string;
   email: string;
@@ -33,3 +39,5 @@ export interface Authentication {
 export interface LoggedInUser {
   userId: string;
 }
+
+export const DEFAULT_EMOTION_RATING = 3;

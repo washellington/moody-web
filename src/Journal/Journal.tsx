@@ -49,7 +49,9 @@ const Journal: React.FC = () => {
 
   const [open, setOpen] = React.useState(false);
   const [openAddEntry, setOpenAddEntry] = React.useState(false);
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(
+    new Date()
+  );
   const ref = React.createRef<HTMLFormElement>();
 
   const mentalStates = useSelector<AppState, MentalState[]>(
@@ -78,13 +80,14 @@ const Journal: React.FC = () => {
   return (
     <div className={classes.root} id="Journal">
       <Calendar
+        value={selectedDate}
         tileClassName={({ date, view }) => {
           let entry = mentalStates.find(x => {
             return new Date(x.entry_date).getDate() == date.getDate();
           });
 
           return view === "month" && entry != null
-            ? `rating-${entry.rating}`
+            ? `rating rating-${entry.rating}`
             : null;
         }}
         showNeighboringMonth={false}
@@ -118,7 +121,12 @@ const Journal: React.FC = () => {
         onClose={() => setOpen(false)}
         open={open}
       >
-        <DrawerEntry />
+        <DrawerEntry
+          onDelete={() => {
+            setOpen(false);
+            setSelectedDate(undefined);
+          }}
+        />
       </Drawer>
       <AddEmotionEntry
         open={openAddEntry}

@@ -17,8 +17,9 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import "./DrawerEntry.scss";
 import EmotionSlider from "../EmotionSlider/EmotionSlider";
 import { MentalState } from "../types";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../reducer";
+import { deleteMoodEntry } from "../service";
 const useStyles = makeStyles(theme => ({
   root: {
     width: "30vw",
@@ -48,14 +49,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const DrawerEntry: React.FC = () => {
+interface Props {
+  onDelete: () => void;
+}
+
+const DrawerEntry: React.FC<Props> = props => {
   const classes = useStyles();
+
+  const { onDelete } = props;
 
   const entry = useSelector<AppState, MentalState>(
     state => state.selectedEntry as MentalState
   );
 
-  const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -68,10 +75,19 @@ const DrawerEntry: React.FC = () => {
           <Emotion rating={entry ? entry.rating : undefined} />
         </div>
         <div className={classes.buttonContainer}>
-          <Button variant="contained" className="edit-button">
+          {/* <Button variant="contained" className="edit-button">
             Edit
+          </Button> */}
+          <Button
+            className="remove-button"
+            onClick={() => {
+              dispatch(deleteMoodEntry(entry._id as string));
+
+              onDelete();
+            }}
+          >
+            Remove
           </Button>
-          <Button className="remove-button">Remove</Button>
         </div>
       </div>
     </>

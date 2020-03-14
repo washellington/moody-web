@@ -4,6 +4,12 @@
 
 #Journal {
   .react-calendar {
+    .react-calendar__month-view__days__day:hover {
+      &:not(.rating):not(:enabled),
+      &:focus {
+        background-color: initial;
+      }
+    }
     width: 985px / $mock-web_width * 100vw;
     max-width: 985px;
     font-size: 30px;

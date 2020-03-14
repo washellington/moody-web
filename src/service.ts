@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { MentalState, MonthMentalStateDTO } from "./types";
+import { MentalState, MonthMentalStateDTO, MentalStateDTO } from "./types";
 import { AppActions } from "./actions";
 import { toast } from "react-toastify";
 import { ALERT_MSG } from "./alerts";
@@ -14,6 +14,7 @@ const LOG_MOOD = "mental_state";
 const DEFAULT_MOOD_TYPE = "mood_type/default";
 const GET_USER_INFO = "users/info";
 const MENTAL_STATE_BY_MONTH_URL = "mental_state/month";
+const DELETE_ENTRY_URL = "mental_state";
 
 export const api = axios.create({
   baseURL: "http://localhost:1234",
@@ -71,6 +72,10 @@ export const getMentalStateOverview = () => {
   return api.get(OVERVIEW_URL);
 };
 
+export const deleteEntry = (id: string) => {
+  return api.delete(DELETE_ENTRY_URL + "/" + id);
+};
+
 export const getMentalStateByMonth = (
   month: number,
   year: number,
@@ -91,6 +96,28 @@ export const fetchMentalStateByMonth = (
         if (!data.data.err) {
           console.log("Months mental state:", data.data.mental_states);
           dispatch(AppActions.setMentalStates(data.data.mental_states));
+        }
+      })
+      .catch(err => {
+        toast.error(ALERT_MSG.errorMessage(err));
+      });
+  };
+};
+
+export const deleteMoodEntry = (
+  id: string
+): ThunkAction<void, AppState, undefined, Action<string>> => {
+  return (dispatch, state) => {
+    deleteEntry(id)
+      .then((data: AxiosResponse<MentalStateDTO>) => {
+        if (!data.data.err) {
+          console.log("Deleted entry with id:", id);
+          dispatch(
+            fetchMentalStateByMonth(
+              new Date((state().selectedEntry as MentalState).entry_date),
+              state().selectedMoodTypeId
+            )
+          );
         }
       })
       .catch(err => {

@@ -1,15 +1,14 @@
 import React from "react";
 import { makeStyles, Slider } from "@material-ui/core";
 import Emotion from "../Emotion/Emotion";
-import EmptyEmotionState from "../EmptyEmotionState/EmptyEmotionState";
-import EmotionEntryReview from "../EmotionEntryReview/EmotionEntryReview";
+
+import { DEFAULT_EMOTION_RATING } from "../types";
 
 const useStyles = makeStyles(theme => ({}));
 
 interface Props {
   onChange: (rating: number) => void;
 }
-export const DEFAULT_EMOTION_RATING = 2;
 const EmotionSlider: React.FC<Props> = props => {
   const classes = useStyles();
 

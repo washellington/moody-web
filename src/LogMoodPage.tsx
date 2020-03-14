@@ -11,7 +11,8 @@ import {
   logMood,
   getUserInformation,
   LoginResponse,
-  getDefaultMoodType
+  getDefaultMoodType,
+  fetchMentalStateByMonth
 } from "./service";
 import { toast } from "react-toastify";
 import { ALERT_MSG } from "./alerts";
@@ -20,8 +21,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppActions } from "./actions";
 import { AppState } from "./reducer";
-import { MoodTypeDTO, Authentication } from "./types";
-import { DEFAULT_EMOTION_RATING } from "./EmotionSlider/EmotionSlider";
+import { MoodTypeDTO, Authentication, DEFAULT_EMOTION_RATING } from "./types";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
@@ -102,7 +102,9 @@ const LogMoodPage: React.FC = () => {
             })
               .then(data => {
                 console.log("retuned value from log mood", data);
-                //          history.push("/journal");
+                dispatch(
+                  fetchMentalStateByMonth(values.entryDate, selectedMoodType)
+                );
               })
               .catch(err => {
                 toast.error(ALERT_MSG.errorMessage(err));

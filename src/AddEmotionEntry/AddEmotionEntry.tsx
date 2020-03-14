@@ -11,8 +11,7 @@ import LogMoodForm from "../LogMoodForm/LogMoodForm";
 import { logMood, fetchMentalStateByMonth } from "../service";
 import { ALERT_MSG } from "../alerts";
 import { toast } from "react-toastify";
-import { MentalState, Authentication } from "../types";
-import { DEFAULT_EMOTION_RATING } from "../EmotionSlider/EmotionSlider";
+import { MentalState, Authentication, DEFAULT_EMOTION_RATING } from "../types";
 import { Formik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../reducer";
@@ -62,7 +61,9 @@ const AddEmotionEntry: React.FC<AddEmotionEntryProp> = props => {
     })
       .then(data => {
         console.log("retuned value from log mood", data);
-        //          history.push("/journal");
+        dispatch(
+          fetchMentalStateByMonth(new Date(entry.entry_date), entry.mood_type)
+        );
       })
       .catch(err => {
         toast.error(ALERT_MSG.errorMessage(err));
@@ -98,7 +99,6 @@ const AddEmotionEntry: React.FC<AddEmotionEntryProp> = props => {
             notes: values.notes,
             mood_type: selectedMoodType
           });
-          dispatch(fetchMentalStateByMonth(entryDate, selectedMoodType));
         }}
       >
         {({

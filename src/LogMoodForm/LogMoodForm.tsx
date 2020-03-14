@@ -6,9 +6,7 @@ import Emotion from "../Emotion/Emotion";
 import EmptyEmotionState from "../EmptyEmotionState/EmptyEmotionState";
 import EmotionEntryReview from "../EmotionEntryReview/EmotionEntryReview";
 import moment from "moment";
-import EmotionSlider, {
-  DEFAULT_EMOTION_RATING
-} from "../EmotionSlider/EmotionSlider";
+import EmotionSlider from "../EmotionSlider/EmotionSlider";
 import * as Yup from "yup";
 
 import "./LogMoodForm.scss";
