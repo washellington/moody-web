@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    padding: "2vw 0"
+    padding: "2vw"
   }
 }));
 

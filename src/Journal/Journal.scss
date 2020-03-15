@@ -2,6 +2,12 @@
 @import "../assets/common/mobile";
 @import "../assets/common/web";
 
+@media only screen and (min-width: 600px) {
+  #Journal {
+    margin-left: 50px;
+  }
+}
+
 #Journal {
   .react-calendar {
     .react-calendar__month-view__days__day:hover {
@@ -10,16 +16,31 @@
         background-color: initial;
       }
     }
-    width: 985px / $mock-web_width * 100vw;
+    width: 100%;
     max-width: 985px;
     font-size: 30px;
     //max-height: 650px;
     //height: 650px / $mock_web_height * 100vh;
     .react-calendar__month-view__days button {
       font-size: 23px;
+      font-family: Roboto-Regular;
     }
     .react-calendar__navigation button {
       font-size: 26px;
+      color: $primary_color;
+      font-weight: bold;
+      font-family: Roboto-Regular;
+    }
+    .react-calendar__navigation__next2-button,
+    .react-calendar__navigation__prev2-button {
+      display: none;
+    }
+
+    .react-calendar__month-view__weekdays__weekday {
+      color: $primary_color;
+      abbr {
+        text-decoration: none;
+      }
     }
   }
 }

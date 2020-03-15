@@ -59,6 +59,7 @@ const AddEmotionEntry: React.FC<AddEmotionEntryProp> = props => {
         dispatch(
           fetchMentalStateByMonth(new Date(entry.entry_date), entry.mood_type)
         );
+        onConfirm();
       })
       .catch(err => {
         toast.error(ALERT_MSG.errorMessage(err));
@@ -74,8 +75,7 @@ const AddEmotionEntry: React.FC<AddEmotionEntryProp> = props => {
 
   const validationSchema = Yup.object({
     emotionRating: Yup.number().required(),
-    entryDate: Yup.date().required(),
-    notes: Yup.string().required()
+    entryDate: Yup.date().required()
   });
 
   console.log("entry date = ", entryDate);
@@ -126,7 +126,6 @@ const AddEmotionEntry: React.FC<AddEmotionEntryProp> = props => {
                 onClick={() => {
                   console.log("onclose");
                   submitForm();
-                  onConfirm();
                 }}
                 color="primary"
               >

@@ -53,8 +53,7 @@ const LogMoodPage: React.FC = () => {
 
   const validationSchema = Yup.object({
     emotionRating: Yup.number().required(),
-    entryDate: Yup.date().required(),
-    notes: Yup.string().required()
+    entryDate: Yup.date().required()
   });
 
   const fetchDefaultMoodType = () => {
@@ -128,12 +127,12 @@ const LogMoodPage: React.FC = () => {
           <AddEmotionEntry
             open={open}
             onCancel={() => {
-              setOpen(false);
+              history.push("/journal");
             }}
             onClose={() => {
-              setOpen(false);
+              history.push("/journal");
             }}
-            onConfirm={() => setOpen(false)}
+            onConfirm={() => history.push("/journal")}
           />
         </>
       )}

@@ -33,12 +33,12 @@ import "../Emotion/Emotion.scss";
 import LogMoodForm from "../LogMoodForm/LogMoodForm";
 import { ref } from "yup";
 import { useHistory } from "react-router-dom";
+import moment from "moment";
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
-    justifyContent: "center",
-    marginLeft: WEB_DRAWER_WIDTH
+    justifyContent: "center"
   },
   drawerEntry: {
     width: "25vw"
@@ -81,6 +81,11 @@ const Journal: React.FC = () => {
   return (
     <div className={classes.root} id="Journal">
       <Calendar
+        formatShortWeekday={(locale, date) =>
+          moment(date)
+            .format("dd")
+            .substr(0, 1)
+        }
         value={selectedDate}
         tileClassName={({ date, view }) => {
           let entry = mentalStates.find(x => {

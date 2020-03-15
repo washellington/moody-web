@@ -84,12 +84,12 @@ const ShowMoodPage: React.FC = () => {
           <Drawer
             className={classes.drawerEntry}
             anchor="right"
-            onClose={() => setOpen(false)}
+            onClose={() => history.push("/journal")}
             open={open}
           >
             <DrawerEntry
               onDelete={() => {
-                setOpen(false);
+                history.push("/journal");
               }}
             />
           </Drawer>

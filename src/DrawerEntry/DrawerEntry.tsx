@@ -20,6 +20,8 @@ import { MentalState } from "../types";
 import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../reducer";
 import { deleteMoodEntry } from "../service";
+import { useHistory } from "react-router-dom";
+import moment from "moment";
 const useStyles = makeStyles(theme => ({
   root: {
     width: "30vw",
@@ -39,7 +41,6 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "bold",
     fontSize: 14,
     fontFamily: "YuGoth",
-    justifyContent: "flex-end",
     marginRight: 10,
     marginBottom: 5
   },
@@ -63,21 +64,34 @@ const DrawerEntry: React.FC<Props> = props => {
   );
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   return (
     <>
       <div id="DrawerEntry" className={classes.root}>
         <div className={classes.drawerEntryTopContainer}>
-          <a className={classes.returnToJournalLink}>
+          <a
+            className={classes.returnToJournalLink}
+            onClick={() => {
+              history.push("/journal");
+            }}
+          >
             <ArrowBackIosIcon />
             Return to Journal
           </a>
           <Emotion rating={entry ? entry.rating : undefined} />
+          <div>
+            <h1>{moment(entry.entry_date).format("MM/DD/YYYY")}</h1>
+
+            <h2>Note</h2>
+            <p>{entry.notes || "No Note"}</p>
+          </div>
         </div>
         <div className={classes.buttonContainer}>
           {/* <Button variant="contained" className="edit-button">
             Edit
           </Button> */}
+
           <Button
             className="remove-button"
             onClick={() => {

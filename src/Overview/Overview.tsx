@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Route, useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Button } from "@material-ui/core";
 import "./Overview.scss";
 import NavBar from "../NavBar/NavBar";
 import Emotion from "../Emotion/Emotion";
@@ -114,15 +114,14 @@ const Overview: React.FC<Props> = props => {
                   </div>
                 </div>
                 <div className={classes.buttonContainer}>
-                  <button
+                  <Button
                     className="log-mood-bttn"
-                    type="button"
                     onClick={() => {
                       history.push("/log_mood");
                     }}
                   >
                     Log Mood
-                  </button>
+                  </Button>
                 </div>
               </div>
             )}

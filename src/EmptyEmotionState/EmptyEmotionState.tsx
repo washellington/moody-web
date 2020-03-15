@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Button } from "@material-ui/core";
 import NavBar from "../NavBar/NavBar";
 import emptyStateImage from "../assets/empty_state/embarassed_1_.svg";
 import "./EmptyEmotionState.scss";
@@ -21,14 +21,13 @@ const EmptyEmotionState: React.FC = () => {
         <br /> not have any mood
         <br /> entries
       </p>
-      <button
-        type="button"
+      <Button
         onClick={() => {
           history.push("/log_mood");
         }}
       >
         Log Mood
-      </button>
+      </Button>
     </div>
   );
 };
