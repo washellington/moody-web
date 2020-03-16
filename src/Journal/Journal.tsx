@@ -75,7 +75,7 @@ const Journal: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchMentalStateByMonth(new Date(), selectedMoodType));
+    dispatch(fetchMentalStateByMonth(selectedDate, selectedMoodType));
   }, [selectedMoodType]);
 
   return (
@@ -86,6 +86,8 @@ const Journal: React.FC = () => {
             .format("dd")
             .substr(0, 1)
         }
+        maxDetail="month"
+        minDetail="month"
         value={selectedDate}
         tileClassName={({ date, view }) => {
           let entry = mentalStates.find(x => {

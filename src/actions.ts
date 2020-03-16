@@ -90,7 +90,7 @@ const loginUser = (user: LoggedInUser) => {
   };
 };
 
-const getRecentEntries = (entries: MentalState) => {
+const setRecentEntries = (entries: MentalState) => {
   return {
     type: RECENT_ENTRIES,
     entries
@@ -114,7 +114,7 @@ const setMoodTypeId = (moodTypeId: string) => {
 export const AppActions = {
   showLoading,
   loginUser,
-  getRecentEntries,
+  setRecentEntries,
   selectEntry,
   setMoodTypeId,
   setMentalStates,

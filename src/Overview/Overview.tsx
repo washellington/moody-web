@@ -73,7 +73,7 @@ const Overview: React.FC<Props> = props => {
           getRecentMoods(data.data._id).then(data => {
             const recentEmotions = data.data;
             console.log(recentEmotions);
-            dispatch(AppActions.getRecentEntries(recentEmotions));
+            dispatch(AppActions.setRecentEntries(recentEmotions));
           });
         } else toast.error(ALERT_MSG.errorMessage(data.data.err as string));
       })
@@ -98,7 +98,12 @@ const Overview: React.FC<Props> = props => {
                 <div className="flex-center-container">
                   <h1>Overall Mood</h1>
                 </div>
-                <Emotion rating={3} />
+                <Emotion
+                  rating={Math.round(
+                    recentEntries.reduce((a, b) => a + b.rating, 0) /
+                      recentEntries.length
+                  )}
+                />
                 <div className="flex-center-container">
                   <div className={classes.emotionEntryContainer + " container"}>
                     <h1>Recent Entries</h1>
