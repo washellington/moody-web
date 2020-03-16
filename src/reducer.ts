@@ -7,7 +7,8 @@ import {
   SELECT_ENTRY,
   SET_MOOD_TYPE_ID,
   SET_MENTAL_STATES,
-  SET_SELECTED_DATE
+  SET_SELECTED_DATE,
+  SET_LOADING
 } from "./actions";
 import { MentalState, Authentication } from "./types";
 
@@ -19,6 +20,7 @@ export interface AppState {
   selectedMoodTypeId: string;
   mentalStates: MentalState[];
   selectedDate: Date;
+  isLoading: boolean;
 }
 const initialState: AppState = {
   authentication: {
@@ -31,11 +33,18 @@ const initialState: AppState = {
   selectedEntry: undefined,
   selectedMoodTypeId: "",
   mentalStates: [],
-  selectedDate: new Date()
+  selectedDate: new Date(),
+  isLoading: false
 };
 
 function MoodyApp(state: AppState = initialState, action: AppAction) {
   switch (action.type) {
+    case SET_LOADING: {
+      return {
+        ...state,
+        isLoading: action.isLoading
+      };
+    }
     case SET_SELECTED_DATE: {
       return {
         ...state,

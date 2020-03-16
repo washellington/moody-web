@@ -60,6 +60,9 @@ const Journal: React.FC = () => {
   const selectedMoodType = useSelector<AppState, string>(
     state => state.selectedMoodTypeId
   );
+
+  const isLoading = useSelector<AppState, boolean>(state => state.isLoading);
+
   const dispatch = useDispatch();
 
   const history = useHistory();

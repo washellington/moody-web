@@ -12,6 +12,13 @@ export const SET_MENTAL_STATES = "SET_MENTAL_STATES";
 
 export const SET_SELECTED_DATE = "SET_SELECTED_DATE";
 
+export const SET_LOADING = "SET_LOADING";
+
+interface SetLoading {
+  type: typeof SET_LOADING;
+  isLoading: boolean;
+}
+
 interface SetSelectedDate {
   type: typeof SET_SELECTED_DATE;
   date: Date;
@@ -61,7 +68,15 @@ export type AppAction =
   | SelectEntry
   | SetMoodTypeId
   | SetMentalStates
-  | SetSelectedDate;
+  | SetSelectedDate
+  | SetLoading;
+
+const setLoading = (loading: boolean) => {
+  return {
+    type: SET_LOADING,
+    isLoading: loading
+  };
+};
 
 const setSelectedDate = (date: Date) => {
   return {
@@ -118,5 +133,6 @@ export const AppActions = {
   selectEntry,
   setMoodTypeId,
   setMentalStates,
-  setSelectedDate
+  setSelectedDate,
+  setLoading
 };

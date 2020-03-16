@@ -65,7 +65,7 @@ const ShowMood: React.FC<Props> = props => {
       <Emotion rating={entry.rating} />
       <div>
         <h2>Note</h2>
-        <p>{entry.notes}</p>
+        <p>{entry.notes || "No Notes"}</p>
       </div>
 
       <div className={classes.buttonContainer}>

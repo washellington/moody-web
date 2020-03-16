@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Route, useHistory } from "react-router-dom";
-import { makeStyles, Button } from "@material-ui/core";
+import { makeStyles, Button, CircularProgress } from "@material-ui/core";
 import "./Overview.scss";
 import NavBar from "../NavBar/NavBar";
 import Emotion from "../Emotion/Emotion";
@@ -65,7 +65,10 @@ const Overview: React.FC<Props> = props => {
     state => state.selectedMoodTypeId
   );
 
+  const isLoading = useSelector<AppState, boolean>(state => state.isLoading);
+
   useEffect(() => {
+    dispatch(AppActions.setLoading(true));
     getDefaultMoodType()
       .then((data: AxiosResponse<MoodTypeDTO>) => {
         if (!data.data.err) {
@@ -74,6 +77,7 @@ const Overview: React.FC<Props> = props => {
             const recentEmotions = data.data;
             console.log(recentEmotions);
             dispatch(AppActions.setRecentEntries(recentEmotions));
+            dispatch(AppActions.setLoading(false));
           });
         } else toast.error(ALERT_MSG.errorMessage(data.data.err as string));
       })
@@ -85,57 +89,71 @@ const Overview: React.FC<Props> = props => {
       {!isMobile && (
         <>
           <NavBar />
-          <WebOverview recentEntries={recentEntries} />
+          {isLoading && (
+            <div id="loadingContainer">
+              <CircularProgress />
+            </div>
+          )}
+          {!isLoading && <WebOverview recentEntries={recentEntries} />}
         </>
       )}
       {isMobile && (
         <>
           <NavBar />
-          <div id="Overview">
-            <h2>Overview</h2>
-            {recentEntries.length > 0 && (
-              <div className={classes.overviewContainer}>
-                <div className="flex-center-container">
-                  <h1>Overall Mood</h1>
-                </div>
-                <Emotion
-                  rating={Math.round(
-                    recentEntries.reduce((a, b) => a + b.rating, 0) /
-                      recentEntries.length
-                  )}
-                />
-                <div className="flex-center-container">
-                  <div className={classes.emotionEntryContainer + " container"}>
-                    <h1>Recent Entries</h1>
+          {isLoading && (
+            <div id="loadingContainer">
+              <CircularProgress />
+            </div>
+          )}
+          {!isLoading && (
+            <div id="Overview">
+              <h2>Overview</h2>
+              {recentEntries.length > 0 && (
+                <div className={classes.overviewContainer}>
+                  <div className="flex-center-container">
+                    <h1>Overall Mood</h1>
+                  </div>
+                  <Emotion
+                    rating={Math.round(
+                      recentEntries.reduce((a, b) => a + b.rating, 0) /
+                        recentEntries.length
+                    )}
+                  />
+                  <div className="flex-center-container">
+                    <div
+                      className={classes.emotionEntryContainer + " container"}
+                    >
+                      <h1>Recent Entries</h1>
 
-                    {recentEntries.map((x, i) => {
-                      return (
-                        <EmotionEntryReview
-                          key={`emotion-entry-${i}`}
-                          emotion={x}
-                        />
-                      );
-                    })}
+                      {recentEntries.map((x, i) => {
+                        return (
+                          <EmotionEntryReview
+                            key={`emotion-entry-${i}`}
+                            emotion={x}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <div className={classes.buttonContainer}>
+                    <Button
+                      className="log-mood-bttn"
+                      onClick={() => {
+                        history.push("/log_mood");
+                      }}
+                    >
+                      Log Mood
+                    </Button>
                   </div>
                 </div>
-                <div className={classes.buttonContainer}>
-                  <Button
-                    className="log-mood-bttn"
-                    onClick={() => {
-                      history.push("/log_mood");
-                    }}
-                  >
-                    Log Mood
-                  </Button>
+              )}
+              {recentEntries.length === 0 && (
+                <div className={classes.emptyStateContainer}>
+                  <EmptyEmotionState />
                 </div>
-              </div>
-            )}
-            {recentEntries.length === 0 && (
-              <div className={classes.emptyStateContainer}>
-                <EmptyEmotionState />
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          )}
         </>
       )}
     </>

@@ -91,11 +91,13 @@ export const fetchMentalStateByMonth = (
   selectedMoodType: string
 ): ThunkAction<void, AppState, undefined, Action<string>> => {
   return dispatch => {
+    dispatch(AppActions.setLoading(true));
     getMentalStateByMonth(date.getMonth(), date.getFullYear(), selectedMoodType)
       .then((data: AxiosResponse<MonthMentalStateDTO>) => {
         if (!data.data.err) {
           console.log("Months mental state:", data.data.mental_states);
           dispatch(AppActions.setMentalStates(data.data.mental_states));
+          dispatch(AppActions.setLoading(false));
         }
       })
       .catch(err => {
