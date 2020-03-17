@@ -11,11 +11,13 @@ import { toast } from "react-toastify";
 import { ALERT_MSG } from "../alerts";
 import { TextField } from "@material-ui/core";
 import { Label } from "@material-ui/icons";
+import ReCAPTCHA from "react-google-recaptcha";
 
 interface InitialValueProp {
   email: string;
   password: string;
   retypePassword: string;
+  recaptcha: boolean;
 }
 const CreateAccount: React.FC = () => {
   const history = useHistory();
@@ -25,15 +27,19 @@ const CreateAccount: React.FC = () => {
   const initialValue: InitialValueProp = {
     email: "",
     password: "",
-    retypePassword: ""
+    retypePassword: "",
+    recaptcha: false
   };
 
   const validationSchema = Yup.object({
-    email: Yup.string().required(),
+    email: Yup.string().required("Username is required"),
     password: Yup.string().required("Password is required"),
     retypePassword: Yup.string()
-      .required("Retype password is required")
-      .oneOf([Yup.ref("password")], "Passwords must match")
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .required("Confirm password is required"),
+    recaptcha: Yup.boolean()
+      .required("You must validate the reCAPTCHA ")
+      .oneOf([true], "You must validate the reCAPTCHA")
   });
 
   const formik = useFormik({
@@ -64,13 +70,14 @@ const CreateAccount: React.FC = () => {
   return (
     <Route path="/">
       <div className="App" id="LandingPage">
+        <img src={logo} className="App-logo" alt="logo" />
         <form id="signUpForm" onSubmit={formik.handleSubmit}>
           <div className="inputField">
-            <label>Email</label>
+            <label>Username</label>
             <input
               name="email"
               type="text"
-              placeholder="Email"
+              placeholder="Username"
               onChange={formik.handleChange}
               value={formik.values.email}
             />
@@ -82,7 +89,7 @@ const CreateAccount: React.FC = () => {
             <label>Password</label>
             <input
               name="password"
-              type="text"
+              type="password"
               placeholder="Password"
               onChange={formik.handleChange}
               value={formik.values.password}
@@ -92,16 +99,36 @@ const CreateAccount: React.FC = () => {
             )}
           </div>
           <div className="inputField">
-            <label>ReType Password</label>
+            <label>Confirm Password</label>
             <input
               name="retypePassword"
-              type="text"
-              placeholder="Retype Password"
+              type="password"
+              placeholder="Confirm Password"
               onChange={formik.handleChange}
               value={formik.values.retypePassword}
             />
-            {formik.errors.password && (
+            {formik.errors.retypePassword && (
               <span className="error">{formik.errors.retypePassword}</span>
+            )}
+          </div>
+          <div className="inputField">
+            <ReCAPTCHA
+              sitekey="6Ld6yOEUAAAAANWfMAZyY9k3L-D2XMRT-nBVLzXM"
+              onChange={() => {
+                formik.setFieldValue("recaptcha", true);
+                formik.handleChange("recaptcha");
+              }}
+              onExpired={() => {
+                formik.setFieldValue("recaptcha", false);
+                formik.handleChange("recaptcha");
+              }}
+              onErrored={() => {
+                formik.setFieldValue("recaptcha", false);
+                formik.handleChange("recaptcha");
+              }}
+            />
+            {formik.errors.recaptcha && (
+              <span className="error">{formik.errors.recaptcha}</span>
             )}
           </div>
           <button type="submit">Create Account</button>

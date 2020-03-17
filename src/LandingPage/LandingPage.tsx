@@ -66,7 +66,7 @@ const LandingPage: React.FC = () => {
             <input
               name="email"
               type="text"
-              placeholder="Email"
+              placeholder="Username"
               onChange={formik.handleChange}
               value={formik.values.email}
             />
@@ -77,7 +77,7 @@ const LandingPage: React.FC = () => {
           <div className="inputField">
             <input
               name="password"
-              type="text"
+              type="password"
               placeholder="Password"
               onChange={formik.handleChange}
               value={formik.values.password}

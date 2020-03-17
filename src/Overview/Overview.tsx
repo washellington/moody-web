@@ -81,7 +81,10 @@ const Overview: React.FC<Props> = props => {
           });
         } else toast.error(ALERT_MSG.errorMessage(data.data.err as string));
       })
-      .catch(err => toast.error(ALERT_MSG.errorMessage(err)));
+      .catch(err => {
+        history.push("/");
+        toast.error(ALERT_MSG.errorMessage(err));
+      });
   }, []);
 
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./LandingPage/LandingPage";
+import LandingPage from "./LandingPage/LandingPage";
 import * as serviceWorker from "./serviceWorker";
 import "./fonts/YuGothR.ttc";
 import "typeface-roboto";
@@ -29,7 +29,7 @@ ReactDOM.render(
     <ToastContainer autoClose={false} />
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={App} />
+        <Route exact path="/" component={LandingPage} />
         <Route path="/dashboard" component={Overview} />
         <Route path="/log_mood" component={LogMoodPage} />
         <Route path="/show_mood" component={ShowMoodPage} />

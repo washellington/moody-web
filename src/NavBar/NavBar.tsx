@@ -105,7 +105,7 @@ const NavBar: React.FC = () => {
   };
 
   const MENU_LIST = isMobile
-    ? ["Dashboard", "Journal", "Reports"]
+    ? ["Dashboard", "Journal", "Reports", "Logout"]
     : ["Dashboard", "Journal", "Settings", "Logout"];
 
   const sideList = () => (
@@ -132,9 +132,10 @@ const NavBar: React.FC = () => {
                       dispatch(AppActions.setSelectedDate(new Date()));
                       history.push("/journal");
                       break;
-                    // case "Reports":
-                    //   history.push("");
-                    //   break;
+                    case "Logout":
+                      localStorage.removeItem("token");
+                      history.push("/");
+                      break;
                     default:
                       break;
                   }
