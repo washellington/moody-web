@@ -45,7 +45,7 @@ const LandingPage: React.FC = () => {
               console.log(data);
               localStorage.setItem("token", data.token);
               dispatch(AppActions.loginUser({ userId: data.userId }));
-              history.push("/dashboard");
+              window.location.href = "/dashboard";
             } else {
               toast.error(ALERT_MSG.INVALID_LOGIN);
             }

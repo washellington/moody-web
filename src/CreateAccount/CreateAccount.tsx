@@ -69,7 +69,7 @@ const CreateAccount: React.FC = () => {
 
   return (
     <Route path="/">
-      <div className="App" id="LandingPage">
+      <div className="App" id="CreateAccountPage">
         <img src={logo} className="App-logo" alt="logo" />
         <form id="signUpForm" onSubmit={formik.handleSubmit}>
           <div className="inputField">

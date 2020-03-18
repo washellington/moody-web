@@ -14,8 +14,14 @@ body,
   flex-direction: column;
   align-items: center;
 }
+@media only screen and (max-width: 600px) {
+  .App:not(#CreateAccountPage) {
+    justify-content: center;
+  }
+}
 
-#LandingPage {
+#LandingPage,
+#CreateAccountPage {
   .App-logo {
     width: (210px / $mock_web_width) * 100vw;
     margin-bottom: 25px;
@@ -54,7 +60,8 @@ body,
   }
 }
 @media only screen and (max-width: 600px) {
-  #LandingPage {
+  #LandingPage,
+  #CreateAccountPage {
     .App-logo {
       width: (210px / $mock_screen_width) * 100vw;
     }
