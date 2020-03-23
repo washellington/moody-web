@@ -20,6 +20,8 @@ import JournalPage from "./JournalPage";
 import LogMoodPage from "./LogMoodPage";
 import ShowMood from "./ShowMood/ShowMood";
 import ShowMoodPage from "./ShowMoodPage";
+import RecoverAccount from "./RecoverAccount";
+import ResetPassword from "./ResetPassword";
 
 const middlewareEnhancer = applyMiddleware(loggerMiddleware, thunkMiddleware);
 
@@ -35,6 +37,8 @@ ReactDOM.render(
         <Route path="/show_mood" component={ShowMoodPage} />
         <Route path="/journal" component={JournalPage} />
         <Route path="/create_account" component={CreateAccount} />
+        <Route path="/recover_account" component={RecoverAccount} />
+        <Route path="/reset_password" component={ResetPassword} />
       </Switch>
     </BrowserRouter>
   </Provider>,

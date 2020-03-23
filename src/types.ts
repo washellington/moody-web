@@ -25,6 +25,11 @@ export interface MonthMentalStateDTO {
   err?: string;
 }
 
+export interface AccountRecoveryDTO {
+  email: string;
+  token: string;
+}
+
 export interface MentalStateDTO {
   mental_state: MentalState;
   err?: string;

@@ -21,10 +21,16 @@ body,
 }
 
 #LandingPage,
-#CreateAccountPage {
+#CreateAccountPage,
+#RecoverAccountPage,
+#ResetPasswordPage {
   .App-logo {
     width: (210px / $mock_web_width) * 100vw;
     margin-bottom: 25px;
+  }
+  a {
+    text-align: center;
+    color: $accent_color;
   }
 
   #signUpForm {
@@ -61,7 +67,9 @@ body,
 }
 @media only screen and (max-width: 600px) {
   #LandingPage,
-  #CreateAccountPage {
+  #CreateAccountPage,
+  #RecoverAccountPage,
+  #ResetPasswordPage {
     .App-logo {
       width: (210px / $mock_screen_width) * 100vw;
     }

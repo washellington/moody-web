@@ -95,6 +95,13 @@ const LandingPage: React.FC = () => {
           >
             Create Account
           </button>
+          <a
+            onClick={() => {
+              history.push("/recover_account");
+            }}
+          >
+            Recover Account
+          </a>
         </form>
       </div>
     </Route>

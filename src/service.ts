@@ -13,6 +13,8 @@ const OVERVIEW_URL = "mental_state/overview";
 const LOG_MOOD = "mental_state";
 const DEFAULT_MOOD_TYPE = "mood_type/default";
 const GET_USER_INFO = "users/info";
+const RECOVER_ACCOUNT = "users/recover_account";
+const RESET_PASSWORD = "users/reset_password";
 const MENTAL_STATE_BY_MONTH_URL = "mental_state/month";
 const DELETE_ENTRY_URL = "mental_state";
 
@@ -40,6 +42,24 @@ export const loginUser = (email: string, password: string) => {
   return api.post(LOGIN_URL, {
     email,
     password
+  });
+};
+
+export const recoverAccount = (email: string) => {
+  return api.post(RECOVER_ACCOUNT, {
+    email
+  });
+};
+
+export const resetPassword = (
+  email: string,
+  password: string,
+  token: string
+) => {
+  return api.put(RESET_PASSWORD, {
+    email,
+    password,
+    token
   });
 };
 

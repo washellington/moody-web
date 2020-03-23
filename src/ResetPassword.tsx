@@ -1,26 +1,28 @@
 import React from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import logo from "../assets/title/moody_title.svg";
-import { Route, useHistory } from "react-router-dom";
+import logo from "./assets/title/moody_title.svg";
+import { Route, useHistory, useLocation } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import { useDispatch } from "react-redux";
-import { AppActions } from "../actions";
-import { loginUser, LoginResponse, createUser } from "../service";
 import { toast } from "react-toastify";
-import { ALERT_MSG } from "../alerts";
 import { TextField } from "@material-ui/core";
 import { Label } from "@material-ui/icons";
 import ReCAPTCHA from "react-google-recaptcha";
+import { AppActions } from "./actions";
+import { recoverAccount, resetPassword } from "./service";
+import { ALERT_MSG } from "./alerts";
+import { AccountRecoveryDTO } from "./types";
 
 interface InitialValueProp {
   email: string;
   password: string;
   retypePassword: string;
-  recaptcha: boolean;
+  token: string;
 }
-const CreateAccount: React.FC = () => {
+const ResetPassword: React.FC = () => {
   const history = useHistory();
+  const location = useLocation();
 
   const dispatch = useDispatch();
 
@@ -28,18 +30,19 @@ const CreateAccount: React.FC = () => {
     email: "",
     password: "",
     retypePassword: "",
-    recaptcha: false
+    token: location.search.split("=")[1]
   };
 
+  console.log(initialValue);
+
   const validationSchema = Yup.object({
-    email: Yup.string().required("Username is required"),
+    email: Yup.string()
+      .email()
+      .required("Email is required"),
     password: Yup.string().required("Password is required"),
     retypePassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
-      .required("Confirm password is required"),
-    recaptcha: Yup.boolean()
-      .required("You must validate the reCAPTCHA ")
-      .oneOf([true], "You must validate the reCAPTCHA")
+      .required("Confirm password is required")
   });
 
   const formik = useFormik({
@@ -49,34 +52,29 @@ const CreateAccount: React.FC = () => {
       console.log("formik onsubmit");
 
       dispatch(AppActions.showLoading());
-      dispatch(
-        createUser(values.email, values.password)
-          .then((resp: AxiosResponse) => {
-            const { data } = resp;
-            if (resp.status == 200) {
-              toast.success(ALERT_MSG.CREATE_USER_SUCCESS);
-              history.push("/");
-            } else {
-              toast.error(ALERT_MSG.errorMessage(resp.data));
-            }
-          })
-          .catch(err => {
-            toast.error(ALERT_MSG.errorMessage(err));
-          })
-      );
+
+      resetPassword(values.email, values.password, values.token)
+        .then(data => {
+          toast.success("Successfully reset password");
+          history.push("/");
+        })
+        .catch(err => {
+          toast.error(ALERT_MSG.errorMessage(err.response.data.err));
+          console.log(err.response, err.response.data.err);
+        });
     }
   });
 
   return (
-    <div className="App" id="CreateAccountPage">
+    <div className="App" id="ResetPasswordPage">
       <img src={logo} className="App-logo" alt="logo" />
-      <form id="signUpForm" onSubmit={formik.handleSubmit}>
+      <form id="recoverAccountForm" onSubmit={formik.handleSubmit}>
         <div className="inputField">
-          <label>Username</label>
+          <label>Email</label>
           <input
             name="email"
             type="text"
-            placeholder="Username"
+            placeholder="Email"
             onChange={formik.handleChange}
             value={formik.values.email}
           />
@@ -110,27 +108,7 @@ const CreateAccount: React.FC = () => {
             <span className="error">{formik.errors.retypePassword}</span>
           )}
         </div>
-        <div className="inputField">
-          <ReCAPTCHA
-            sitekey="6Ld6yOEUAAAAANWfMAZyY9k3L-D2XMRT-nBVLzXM"
-            onChange={() => {
-              formik.setFieldValue("recaptcha", true);
-              formik.handleChange("recaptcha");
-            }}
-            onExpired={() => {
-              formik.setFieldValue("recaptcha", false);
-              formik.handleChange("recaptcha");
-            }}
-            onErrored={() => {
-              formik.setFieldValue("recaptcha", false);
-              formik.handleChange("recaptcha");
-            }}
-          />
-          {formik.errors.recaptcha && (
-            <span className="error">{formik.errors.recaptcha}</span>
-          )}
-        </div>
-        <button type="submit">Create Account</button>
+        <button type="submit">Reset Password</button>
         <button
           type="button"
           onClick={() => {
@@ -144,4 +122,4 @@ const CreateAccount: React.FC = () => {
   );
 };
 
-export default CreateAccount;
+export default ResetPassword;
