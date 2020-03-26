@@ -62,8 +62,9 @@ const AddEmotionEntry: React.FC<AddEmotionEntryProp> = props => {
         onConfirm();
       })
       .catch(err => {
-        toast.error(ALERT_MSG.errorMessage(err));
-        console.error("Returned with an error", err);
+        if (err.response.data)
+          toast.error(ALERT_MSG.errorMessage(err.response.data.err));
+        else toast.error(err);
       });
   };
 

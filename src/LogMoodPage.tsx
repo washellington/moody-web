@@ -64,7 +64,9 @@ const LogMoodPage: React.FC = () => {
         }
       })
       .catch(err => {
-        toast.error(ALERT_MSG.errorMessage(err));
+        if (err.response.data)
+          toast.error(ALERT_MSG.errorMessage(err.response.data.err));
+        else toast.error(err);
       });
   };
 
@@ -79,7 +81,9 @@ const LogMoodPage: React.FC = () => {
           }
         })
         .catch(err => {
-          toast.error(ALERT_MSG.errorMessage(err));
+          if (err.response.data)
+            toast.error(ALERT_MSG.errorMessage(err.response.data.err));
+          else toast.error(err);
         });
     } else {
       fetchDefaultMoodType();
@@ -111,8 +115,9 @@ const LogMoodPage: React.FC = () => {
                   history.push("/journal");
                 })
                 .catch(err => {
-                  toast.error(ALERT_MSG.errorMessage(err));
-                  console.error("Returned with an error", err);
+                  if (err.response.data)
+                    toast.error(ALERT_MSG.errorMessage(err.response.data.err));
+                  else toast.error(err);
                 });
             }}
           >

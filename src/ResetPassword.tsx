@@ -59,8 +59,9 @@ const ResetPassword: React.FC = () => {
           history.push("/");
         })
         .catch(err => {
-          toast.error(ALERT_MSG.errorMessage(err.response.data.err));
-          console.log(err.response, err.response.data.err);
+          if (err.response.data)
+            toast.error(ALERT_MSG.errorMessage(err.response.data.err));
+          else toast.error(err);
         });
     }
   });

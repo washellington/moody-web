@@ -19,7 +19,7 @@ const MENTAL_STATE_BY_MONTH_URL = "mental_state/month";
 const DELETE_ENTRY_URL = "mental_state";
 
 export const api = axios.create({
-  baseURL: "http://localhost:1234",
+  baseURL: process.env.REACT_APP_BASE_URL,
   timeout: 5000,
   withCredentials: false,
   responseType: "json",
@@ -121,7 +121,9 @@ export const fetchMentalStateByMonth = (
         }
       })
       .catch(err => {
-        toast.error(ALERT_MSG.errorMessage(err));
+        if (err.response.data)
+          toast.error(ALERT_MSG.errorMessage(err.response.data.err));
+        else toast.error(err);
       });
   };
 };
@@ -143,7 +145,9 @@ export const deleteMoodEntry = (
         }
       })
       .catch(err => {
-        toast.error(ALERT_MSG.errorMessage(err));
+        if (err.response.data)
+          toast.error(ALERT_MSG.errorMessage(err.response.data.err));
+        else toast.error(err);
       });
   };
 };

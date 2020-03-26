@@ -37,6 +37,7 @@
     "redux-thunk": "^2.3.0",
     "typeface-roboto": "^0.0.75",
     "typescript": "~3.7.2",
+    "uninstall": "0.0.0",
     "yup": "^0.28.0"
   },
   "scripts": {

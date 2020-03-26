@@ -89,7 +89,9 @@ const WebOverview: React.FC<WebOverviewProps> = props => {
         }
       })
       .catch(err => {
-        toast.error(ALERT_MSG.errorMessage(err));
+        if (err.response.data)
+          toast.error(ALERT_MSG.errorMessage(err.response.data.err));
+        else toast.error(err);
       });
   };
 
@@ -104,7 +106,9 @@ const WebOverview: React.FC<WebOverviewProps> = props => {
           }
         })
         .catch(err => {
-          toast.error(ALERT_MSG.errorMessage(err));
+          if (err.response.data)
+            toast.error(ALERT_MSG.errorMessage(err.response.data.err));
+          else toast.error(err);
         });
     } else {
       fetchMentalStateOverview();
