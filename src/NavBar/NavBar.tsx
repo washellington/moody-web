@@ -12,7 +12,7 @@ import {
   ListItemIcon,
   Divider,
   Drawer,
-  ListItemText
+  ListItemText,
 } from "@material-ui/core";
 import { Menu } from "@material-ui/icons";
 import icon from "../assets/icon/icon.svg";
@@ -29,57 +29,57 @@ import { AppActions } from "../actions";
 
 export const WEB_DRAWER_WIDTH = 50;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   appBar: {
-    backgroundColor: "#fefefe"
+    backgroundColor: "#fefefe",
   },
   menu: {
     color: "#F78B45",
-    flexGrow: 0
+    flexGrow: 0,
   },
   menuContainer: {
     flex: 0,
-    width: "fit-content"
+    width: "fit-content",
   },
   centerGrid: {
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   appIcon: {
-    width: 40
+    width: 40,
   },
   drawer: {
-    width: "50vw"
+    width: "50vw",
   },
   webDrawer: {
     width: WEB_DRAWER_WIDTH,
     height: "100vh",
     display: "flex",
     justifyContent: "space-between",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   webAppMargin: {
-    marginLeft: WEB_DRAWER_WIDTH
+    marginLeft: WEB_DRAWER_WIDTH,
   },
   drawerLink: {
     color: "#5A6174",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   centerContent: {
-    justifyContent: "center"
+    justifyContent: "center",
   },
   webDrawerList: {
     display: "flex",
     justifyContent: "space-around",
     flexDirection: "column",
-    padding: "15vh 0"
-  }
+    padding: "15vh 0",
+  },
 }));
 
 const NavBar: React.FC = () => {
@@ -116,12 +116,12 @@ const NavBar: React.FC = () => {
       onKeyDown={toggleDrawer(false)}
     >
       <List className={isMobile ? "" : classes.webDrawerList}>
-        {MENU_LIST.map(text =>
+        {MENU_LIST.map((text) =>
           isMobile ? (
             <ListItem button key={text}>
               <ListItemText
                 classes={{
-                  primary: classes.drawerLink
+                  primary: classes.drawerLink,
                 }}
                 onClick={() => {
                   switch (text) {
@@ -152,6 +152,10 @@ const NavBar: React.FC = () => {
                     break;
                   case "Journal":
                     history.push("/journal");
+                    break;
+                  case "Logout":
+                    localStorage.removeItem("token");
+                    history.push("/");
                     break;
                   // case "Reports":
                   //   history.push("");
