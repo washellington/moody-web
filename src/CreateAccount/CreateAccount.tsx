@@ -28,7 +28,7 @@ const CreateAccount: React.FC = () => {
     email: "",
     password: "",
     retypePassword: "",
-    recaptcha: false
+    recaptcha: false,
   };
 
   const validationSchema = Yup.object({
@@ -39,13 +39,13 @@ const CreateAccount: React.FC = () => {
       .required("Confirm password is required"),
     recaptcha: Yup.boolean()
       .required("You must validate the reCAPTCHA ")
-      .oneOf([true], "You must validate the reCAPTCHA")
+      .oneOf([true], "You must validate the reCAPTCHA"),
   });
 
   const formik = useFormik({
     initialValues: initialValue,
     validationSchema: validationSchema,
-    onSubmit: values => {
+    onSubmit: (values) => {
       console.log("formik onsubmit");
 
       dispatch(AppActions.showLoading());
@@ -60,13 +60,13 @@ const CreateAccount: React.FC = () => {
               toast.error(ALERT_MSG.errorMessage(resp.data));
             }
           })
-          .catch(err => {
+          .catch((err) => {
             if (err.response.data)
               toast.error(ALERT_MSG.errorMessage(err.response.data.err));
             else toast.error(err);
           })
       );
-    }
+    },
   });
 
   return (
@@ -114,7 +114,7 @@ const CreateAccount: React.FC = () => {
         </div>
         <div className="inputField">
           <ReCAPTCHA
-            sitekey="6Ld6yOEUAAAAANWfMAZyY9k3L-D2XMRT-nBVLzXM"
+            sitekey={`${process.env.REACT_APP_RECAPTCHA_PROD_KEY}`}
             onChange={() => {
               formik.setFieldValue("recaptcha", true);
               formik.handleChange("recaptcha");
